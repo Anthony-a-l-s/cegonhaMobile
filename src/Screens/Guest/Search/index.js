@@ -120,7 +120,6 @@ export default class GuestScreen extends React.Component {
           this.props.navigation.push('FoundHospitalScreen');
         })
         .catch((err) => {
-          console.log(err)
           // eslint-disable-next-line no-alert
           this.setState({
             upColor: '#7BE495',
@@ -301,12 +300,12 @@ export default class GuestScreen extends React.Component {
         <KeyboardAvoidingView
         behavior="position"
         style={ContainerStyles.containerNoJustify}>
-        {/*<View style={ContainerStyles.welcomeContainer}>
+        <View style={ContainerStyles.welcomeContainer}>
           <View style={ViewStyles.circle4}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('InitialScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              <Arrow />
+              {/*<Arrow />*/}
             </TouchableOpacity>
           </View>
           <Snackbar
@@ -320,7 +319,7 @@ export default class GuestScreen extends React.Component {
             }}>
             {this.state.snackMessage}
           </Snackbar>
-        </View>*/}
+        </View>
 
         <Text style={TextStyles.middleBlueText2}>Digite seus dados</Text>
         <Text style={TextStyles.middleGreenText2}>Comece sua procura</Text>

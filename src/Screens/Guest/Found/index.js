@@ -221,7 +221,7 @@ export default class UserHospitalScreen extends React.Component {
       longitudeParto: 0,
       longitudePreNatal: 0,
     });
-      this.props.navigation.push('GuestScreen');
+      this.props.navigation.push('SearchScreen');
   };
 
   handleSlide = type => {
@@ -237,7 +237,6 @@ export default class UserHospitalScreen extends React.Component {
         longitude: this.state.longitudePreNatal,
       },
     });
-    console.log(this.state.destination);
     let {active, translateX, translateXTabOne, translateXTabTwo} = this.state;
     Animated.spring(translateX, {
       toValue: type,
@@ -306,7 +305,6 @@ export default class UserHospitalScreen extends React.Component {
         longitude: this.state.longitudeParto,
       },
     });
-    console.log(this.state.destination);
     let {active, translateX, translateXTabOne, translateXTabTwo} = this.state;
     Animated.spring(translateX, {
       toValue: type,
@@ -431,7 +429,7 @@ export default class UserHospitalScreen extends React.Component {
               strokeColor="#68B2A0"
             />
           </MapView>
-          {/*<View
+          <View
             style={[
               ViewStyles.circle2,
               {backgroundColor: 'white', elevation: 10},
@@ -439,11 +437,11 @@ export default class UserHospitalScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.doReturn()}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              <Arrow />
+              {/*<Arrow />*/}
             </TouchableOpacity>
-          </View>*/}
           </View>
-        {/*<View
+          </View>
+        <View
           style={{
             flexDirection: 'row',
             marginLeft: 0,
@@ -550,7 +548,7 @@ export default class UserHospitalScreen extends React.Component {
             backgroundColor: '#282a36',
           }}
           onPress={() => this.doCall()}>
-          <Phone />
+          {/*<Phone />*/}
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -583,7 +581,7 @@ export default class UserHospitalScreen extends React.Component {
           }}
           onPress={() => this.zoomOut()}>
           <Text style={{fontFamily: 'Montserrat-Medium', fontSize: 30}}>-</Text>
-        </TouchableOpacity>*/}
+        </TouchableOpacity>
         <View
           style={{
             width: '90%',
