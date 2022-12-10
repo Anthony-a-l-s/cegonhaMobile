@@ -1,24 +1,22 @@
-/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
 import * as React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  Dimensions,
   SafeAreaView,
   ScrollView,
-  Image,
-  PickerIOSBase,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
-import Androw from 'react-native-androw';
-//import Arrow from '../../images/arrow-left-curved.svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-//import TextInputMask from 'react-native-text-input-mask';
+import LinearGradient from 'react-native-linear-gradient';
+import axios from 'axios';
 import api from '../../../services/api';
+//import Arrow from '../../images/arrow-left-curved.svg';
 import {Button, TextInput} from 'react-native-paper';
+import Androw from 'react-native-androw';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 import {
   ButtonStyles,
@@ -28,29 +26,22 @@ import {
   ViewStyles,
 } from '../../../styles';
 const windowHeight = Dimensions.get('window').height;
-export default class EditAdressScreen extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.getData();
-  }
+export default class AddAdressScreen extends React.Component {
   state = {
     street: '',
-    number: '',
-    cep: '',
+    number: null,
     district: '',
     city: '',
     uf: '',
+    cep: '',
+    option: '',
     errorMessageCep: '',
     errorMessageStreet: '',
     errorMessageNumber: '',
     errorMessageDistrict: '',
     errorMessageCity: '',
     errorMessageUf: '',
-  };
-
-  onContentSizeChange = (contentWidth, contentHeight) => {
-    this.setState({screenHeight: contentHeight});
   };
   onChangeHandle(state, value) {
     this.setState({
@@ -60,80 +51,90 @@ export default class EditAdressScreen extends React.Component {
   onChange = ({window, screen}) => {
     this.setState({dimensions: {window, screen}});
   };
-
+  onContentSizeChange = (contentWidth, contentHeight) => {
+    this.setState({screenHeight: contentHeight});
+  };
   componentDidMount() {
     Dimensions.addEventListener('change', this.onChange);
   }
 
-  /*componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.onChange);
-  }*/
-
-  goBack = async () => {
+  onChangeCep(value) {
+    if (value.length === 8) {
+      this.setState({
+        cep: value,
+      });
+      this.pesquisacep(value);
+    } else {
+      this.setState({
+        cep: value,
+      });
+    }
+  }
+  limpa_formulário_cep() {
+    //Limpa valores do formulário de cep.
     this.setState({
       street: '',
-      number: '',
-      cep: '',
       district: '',
-      city: '',
-      uf: '',
     });
-    this.props.navigation.push('AdressScreen');
-  };
-  getData = async () => {
-    try {
-      const idAdress = await AsyncStorage.getItem('idAdressEdit');
-      if (idAdress != null) {
-        api
-          .get('adress/' + idAdress)
-          .then(async res => {
-            await AsyncStorage.setItem('idAdress', res.data[0].id.toString());
+  }
+
+  pesquisacep(valor) {
+    //Nova variável "cep" somente com dígitos.
+    var cep = valor.replace(/\D/g, '');
+
+    //Verifica se campo cep possui valor informado.
+    if (cep !== '') {
+      //Expressão regular para validar o CEP.
+      var validacep = /^[0-9]{8}$/;
+
+      //Valida o formato do CEP.
+      if (validacep.test(cep)) {
+        //Preenche os campos com "..." enquanto consulta webservice.
+        this.setState({
+          street: '...',
+          district: '...',
+        });
+        axios
+          .get('https://viacep.com.br/ws/' + cep + '/json/')
+          .then(res => {
             this.setState({
-              street: res.data[0].street,
-              number: res.data[0].number.toString(),
-              cep: res.data[0].cep,
-              district: res.data[0].district,
-              city: res.data[0].city,
-              uf: res.data[0].uf,
+              street: res.data.logradouro,
+              district: res.data.bairro,
+              city: res.data.localidade,
+              uf: res.data.uf,
             });
           })
-          .catch(err => {
-            alert('Algo deu errado!' + err);
+          .catch(() => {
+            alert('CEP inválido, tente outro CEP!');
+            this.setState({
+              cep: '',
+            });
           });
-      }
-      //valor armazenado
-    } catch (e) {
-      //mensagem de erro
-    }
-  };
-  doDelete = async () => {
-    const valID = await AsyncStorage.getItem('idHospitalEdit');
-    console.log(valID);
-    api
-      .delete('hospital/' + valID)
-      .then(res => {
-        this.setState({
-          cep: '',
-          number: '',
-          district: '',
-          street: '',
-          city: '',
-          uf: '',
-          name: '',
-          phone: '',
-          image: '',
-          latitude: '',
-          longitude: '',
-        });
-        AsyncStorage.removeItem('idHospitalEdit');
-        this.props.navigation.push('AdressScreen');
-      })
-      .catch(() => {
-        alert('Algo deu errado!');
-      });
-  };
+      } //end if.
+      else {
+        //cep é inválido.
+        this.limpa_formulário_cep();
 
-  checkFieldEmpty(cep, street, number, district, city, uf) {
+        alert('Formato de CEP inválido.');
+      }
+    } //end if.
+    else {
+      //cep sem valor, limpa formulário.
+      this.limpa_formulário_cep();
+    }
+  }
+  goBack = async () => {
+     if(await AsyncStorage.getItem('type') === '1'){
+      this.props.navigation.navigate('AdminEditUserScreen')
+        this.props.navigation.navigate('AdressScreen')
+     }
+     else{
+        this.props.navigation.navigate('UserScreen')
+        this.props.navigation.navigate('UserListAdressScreen')
+     }
+  }
+
+  checkFieldEmpty(cep, street,number, district, city, uf) {
     var errors = 0;
     if (!cep) {
       this.setState({
@@ -177,10 +178,24 @@ export default class EditAdressScreen extends React.Component {
       return false;
     }
   }
-  doEdit = async () => {
-    const valIdUser = await AsyncStorage.getItem('idUserEdit');
-    const valIdAdress = await AsyncStorage.getItem('idAdressEdit');
-    const {street, number, cep, district, city} = this.state;
+
+  doSignup = async () => {
+      var cpf
+    if(await AsyncStorage.getItem('type') === '1'){
+      cpf = await AsyncStorage.getItem('AdminCpfUser');
+     }
+     else{
+      cpf = await AsyncStorage.getItem('cpfUser');
+     }
+    const {
+    street,
+    number,
+    district,
+    city,
+    uf,
+    cep
+    } = this.state;
+    
     if (
       this.checkFieldEmpty(
         this.state.cep,
@@ -192,72 +207,61 @@ export default class EditAdressScreen extends React.Component {
       ) === false
     ) {
       const req = {
+        cpfUser:  cpf,
         street: street,
-        number: parseInt(number),
-        cep: cep,
+        number: number,
         district: district,
         city: city,
         uf: this.state.uf,
+        cep: cep
       };
       console.log(req)
-      api
-        .put('adress/' + valIdAdress + '/' + valIdUser, req)
-        .then(() => {
-          alert('Mudança realizada com sucesso!');
-          this.back();
+      api.post("/adress", req)
+        .then(res => {
+           alert('Endereço cadastrado!');
+           this.goBack()
         })
-        .catch(() => {
-          alert('Mudança deu errada!');
+        .catch((err) => {
+          alert('Algo deu errado!');
+          console.log(err)
         });
-    }
-  };
-  back = async () => {
-    if (await AsyncStorage.getItem('type') === '1') {
-      this.props.navigation.navigate('AdressScreen');
-    } else {
-      this.props.navigation.navigate('AdressScreen');
-    }
-  };
+    } 
+  }
+
   render() {
     const scrollEnabled = this.state.screenHeight > windowHeight;
-    const {street, number, cep, district, city, uf} = this.state;
+    const {
+      street,
+      number, 
+      district, 
+      city,
+      uf, 
+      cep
+    } = this.state;
     return (
       <SafeAreaView style={ContainerStyles.sContainer}>
         <ScrollView
-          style={ContainerStyles.sContainer}
-          contentContainerStyle={ContainerStyles.scrollViewContainer}
+          style={{flex: 1}}
+          contentContainerStyle={ContainerStyles.scrollView}
           scrollEnabled={scrollEnabled}
-          nestedScrollEnabled = {true}
           onContentSizeChange={this.onContentSizeChange}>
-          <View
-            style={[
-              ContainerStyles.containerNoAlign,
-              {justifyContent: 'flex-start'},
-            ]}>
+          <View style={ContainerStyles.containerNoAlign}>
             <View style={ContainerStyles.welcomeContainer}>
               <View style={ViewStyles.circle4}>
                 <TouchableOpacity
-                  onPress={() => this.back()}
+                  onPress={() =>this.goBack()}
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
                   {/*<Arrow />*/}
                 </TouchableOpacity>
               </View>
             </View>
-
-           
-              <Text
-                style={[
-                  TextStyles.mainBlueText3,
-                  {alignSelf: 'center', width: '80%'},
-                ]}>
-                {street}, {number}
+              <Text style={TextStyles.mainBlueText}>
+                Cadastro de Endereço
               </Text>
               <Text style={TextStyles.mainGreenText}>
-                Altere os campos com dados válidos{' '}
+                Preencha todos os campos com
               </Text>
-              <Text style={TextStyles.subGreenText}>
-                do endereço para alterá-lo
-              </Text>
+              <Text style={TextStyles.subGreenText}>dados válidos</Text>
               <View
                 style={{
                   alignSelf: 'center',
@@ -271,8 +275,44 @@ export default class EditAdressScreen extends React.Component {
                   elevation: 5,
                 }}>
                 <Icon name="user" size={65} color="#282a36" />
+            
               </View>
-
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="CEP"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={cep}
+                    onChangeText={value => (
+                      this.onChangeCep(value),
+                      this.setState({
+                        errorMessageCep: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageCep}
+              </Text>
+              
               <Androw style={ViewStyles.shadow}>
                 <LinearGradient
                   colors={['#FFFFFF', '#FFFFFF']}
@@ -350,44 +390,8 @@ export default class EditAdressScreen extends React.Component {
               </Androw>
               <Text style={TextStyles.textError}>
                 {this.state.errorMessageNumber}
-              </Text>             
-
-              <Androw style={ViewStyles.shadow}>
-                <LinearGradient
-                  colors={['#FFFFFF', '#FFFFFF']}
-                  style={ViewStyles.linearGradient2}>
-                  <TextInput
-                    mode="outlined"
-                    placeholder="CEP"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    style={InputStyles.inputBox}
-                    placeholderTextColor="#D0DAD1"
-                    underlineColor="#FFFFFF"
-                    theme={{
-                      colors: {
-                        text: '#282a36',
-                        primary: '#7BE495',
-                        placeholder: '#D0DAD1',
-                      },
-                      fonts: {regular: ''},
-                      roundness: 18,
-                    }}
-                    value={cep}
-                    onChangeText={value => (
-                      this.onChangeHandle('cep', value),
-                      this.setState({
-                        errorMessageCep: null,
-                      })
-                    )}
-                    fontFamily={'Montserrat-Medium'}
-                  />
-                </LinearGradient>
-              </Androw>
-              <Text style={TextStyles.textError}>
-                {this.state.errorMessageCep}
               </Text>
-
+              
               <Androw style={ViewStyles.shadow}>
                 <LinearGradient
                   colors={['#FFFFFF', '#FFFFFF']}
@@ -552,21 +556,21 @@ export default class EditAdressScreen extends React.Component {
 
               <Androw style={ViewStyles.shadow}>
                 <LinearGradient
-                  colors={['#282a36', '#161616']}
+                  colors={['#282a36', '#000000']}
                   style={[ViewStyles.linearGradient, {marginTop: 40}]}>
                   <TouchableOpacity
                     style={ButtonStyles.customButton}
-                    onPress={() => this.doEdit()}>
+                    onPress={() => this.doSignup()}>
                     <Button color="white">
-                      <Text style={TextStyles.buttonText}>EDITAR ENDEREÇO</Text>
+                      <Text style={TextStyles.buttonText}>
+                        ADICIONAR ENDEREÇO
+                      </Text>
                     </Button>
                   </TouchableOpacity>
                 </LinearGradient>
               </Androw>
-              </View>
+            </View>
             <View style={ContainerStyles.containerSignupBottom} />
-           
-         
         </ScrollView>
       </SafeAreaView>
     );

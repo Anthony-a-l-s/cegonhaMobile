@@ -15,7 +15,7 @@ import AddressIcon from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Arrow from '../../images/arrow-left-curved.svg';
+//import Arrow from '../../images/arrow-left-curved.svg';
 import Pregnant from '../../images/cross.svg';
 import { TextInput } from 'react-native-paper';
 import {
@@ -93,6 +93,13 @@ export default class AdressScreen extends React.Component {
             </View>
         );
     };
+    goBack = async () =>{
+        if(await AsyncStorage.getItem('type') == 1){
+            this.props.navigation.navigate('ListUsersScreen')
+          }else{
+            this.props.navigation.navigate('UserScreen')
+          }
+    }
     goEdit = async (idUser, idAdress) => {
         await AsyncStorage.removeItem('idUserEdit');
         await AsyncStorage.setItem('idUserEdit', JSON.stringify(idUser));
@@ -115,7 +122,7 @@ export default class AdressScreen extends React.Component {
                 alert('Erro na remoção!');
             });
         this.props.navigation.navigate('UserScreen')
-        this.props.navigation.navigate('UserListAdressScreen')
+        this.props.navigation.navigate('AdressScreen')
         //this.props.navigation.push('UserScreen');
     };
     goLocal = async (street, number, district, city, uf, cep) => {
@@ -127,18 +134,21 @@ export default class AdressScreen extends React.Component {
             uf: uf,
             cep: cep,
         };
+        console.log(req)
         if (street && number && city && uf && district && cep) {
             api.get("discovery-addressNh/" + district)
                 .then(res => {
+                    console.log(res.data)
                     const idPreNatal = res.data.id_addres_pre_natal;
                     const stringIdPreNatal = '' + idPreNatal;
                     const idParto = res.data.id_addres_parto;
                     const stringIdParto = '' + idParto;
-                    AsyncStorage.setItem('idPreNatalGuest', stringIdPreNatal);
-                    AsyncStorage.setItem('idPartoGuest', stringIdParto);
-                    this.props.navigation.push('UserHospitalScreen');
+                    AsyncStorage.setItem('idPreNatalUser', stringIdPreNatal);
+                    AsyncStorage.setItem('idPartoUser', stringIdParto);
+                    this.props.navigation.push('UserFoundHospitalScreen');
                 })
                 .catch((err) => {
+                    console.log(err)
                     alert('Não foi possivel buscar um centro médico que atende sua localidade');
 
                 })
@@ -238,7 +248,7 @@ export default class AdressScreen extends React.Component {
                 <View style={[ContainerStyles.welcomeContainer, { flexDirection: 'row' }]}>
                     <View style={[ViewStyles.circle4, { marginRight: 160 }]}>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('UserScreen')}
+                            onPress={() => this.goBack()}
                             hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
                             {/*<Arrow />*/}
                         </TouchableOpacity>

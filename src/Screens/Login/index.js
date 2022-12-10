@@ -8,7 +8,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Androw from 'react-native-androw';
-import Arrow from '../../images/arrow-left-curved.svg';
+//import Arrow from '../../images/arrow-left-curved.svg';
 
 import LinearGradient from 'react-native-linear-gradient';
 import {TextInput, Button, Checkbox, Snackbar} from 'react-native-paper';
@@ -85,7 +85,7 @@ export default class LoginScreen extends React.Component {
     return this.state.on;
   }
   doReturn() {
-    this.props.navigation.push('InitialScreen');
+    this.props.navigation.push('InicialScreen');
   }
 
   doLogin = async () => {
@@ -112,6 +112,7 @@ export default class LoginScreen extends React.Component {
           login(res.data.token)
           if (res.data.admin === true ) {
             console.log('admin')
+            AsyncStorage.removeItem('type');
             AsyncStorage.setItem('type', '1');
             this.props.navigation.push('AdminScreen');
             this.setState({
@@ -130,6 +131,7 @@ export default class LoginScreen extends React.Component {
             });
             console.log('não é admin')
              AsyncStorage.setItem('token', res.data.token);
+             AsyncStorage.removeItem('type');
              AsyncStorage.setItem('type', '2');
              AsyncStorage.setItem('nome', res.data.name);
              AsyncStorage.setItem('cpfUser', res.data.cpf);

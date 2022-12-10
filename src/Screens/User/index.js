@@ -17,6 +17,8 @@ export default class UserScreen extends React.Component {
   /*componentWillUnmount() {
     Dimensions.removeEventListener('change', this.onChange);
   }*/
+
+  
   render() {
     return (
       <View style={ContainerStyles.containerAdmin}>

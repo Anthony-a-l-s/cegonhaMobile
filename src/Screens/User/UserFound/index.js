@@ -30,7 +30,7 @@ const GOOGLE_MAPS_APIKEY = 'AIzaSyDwxYwB57tFaJuqdGxXr2xO23_cJODi6ck';
 const {width} = Dimensions.get('window');
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
-export default class GuestFoundUserHospitalScreen extends React.Component {
+export default class UserFoundHospitalScreen extends React.Component {
   constructor(props) {
     super(props);
     this.getDataPreNatal();
@@ -102,7 +102,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
 
   }
   getDataPreNatal = async () => {
-    const idPreNatal = await AsyncStorage.getItem('idPreNatalGuest');
+    const idPreNatal = await AsyncStorage.getItem('idPreNatalUser');
     api.get('medical-center-id/' + idPreNatal)
       .then(res => {
         const idEnderecoPreNatal = res.data.id;
@@ -148,7 +148,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
       });
   };
   getDataParto = async () => {
-    const idParto = await AsyncStorage.getItem('idPartoGuest');
+    const idParto = await AsyncStorage.getItem('idPartoUser');
     api.get('medical-center-id/' + idParto)
       .then(res => {
         const idEnderecoParto = res.data.id;
@@ -221,7 +221,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
       longitudeParto: 0,
       longitudePreNatal: 0,
     });
-         this.props.navigation.push('SearchScreen');
+          this.props.navigation.navigate('AdressScreen')
   };
 
   handleSlide = type => {

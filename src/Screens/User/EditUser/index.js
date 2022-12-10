@@ -27,7 +27,7 @@ import {
   ViewStyles,
 } from '../../../styles';
 const windowHeight = Dimensions.get('window').height;
-export default class EditHospitalPage extends React.Component {
+export default class EditUserScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -70,16 +70,14 @@ export default class EditHospitalPage extends React.Component {
       email: '',
       cpf: '',
     });
-    this.props.navigation.push('Admin');
-  };
-
-  back = async () => {
-    if(AsyncStorage.getItem('type') === 1){
-      this.props.navigation.navigate('Admin')
+    if(await AsyncStorage.getItem('type') == 1){
+      this.props.navigation.navigate('ListUsersScreen')
     }else{
       this.props.navigation.navigate('UserScreen')
     }
+    
   };
+
   getData = async () => {
     try {
       const valCpf = await AsyncStorage.getItem('cpfUser');
@@ -172,7 +170,6 @@ export default class EditHospitalPage extends React.Component {
       errors = true;
     }
 
-   console.log(errors)
     if (errors === false) {
       const valID = await AsyncStorage.getItem('idUser');
       const {name, username, email, cpf} = this.state;
@@ -187,7 +184,7 @@ export default class EditHospitalPage extends React.Component {
           .put('user2/' + valID, req)
           .then(() => {
             alert('Mudança realizada com sucesso!');
-            this.props.navigation.navigate('UserScreen');
+            this.goBack()
           })
           .catch(() => {
             alert('Mudança deu errada!');
@@ -204,7 +201,7 @@ export default class EditHospitalPage extends React.Component {
       <SafeAreaView style={ContainerStyles.sContainer}>
         <ScrollView
           style={{flex: 1}}
-          contentContainerStyle={ContainerStyles.scrollView}
+          contentContainerStyle={ContainerStyles.scrollViewContainer}
           scrollEnabled={scrollEnabled}
           onContentSizeChange={this.onContentSizeChange}>
           <View
@@ -215,14 +212,13 @@ export default class EditHospitalPage extends React.Component {
             <View style={ContainerStyles.welcomeContainer}>
               <View style={ViewStyles.circle4}>
                 <TouchableOpacity
-                  onPress={() => this.back()}
+                  onPress={() => this.goBack()}
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
                   {/*<Arrow />*/}
                 </TouchableOpacity>
               </View>
             </View>
 
-            <View style={ContainerStyles.container}>
               <Text
                 style={[
                   TextStyles.mainBlueText3,
@@ -416,7 +412,7 @@ export default class EditHospitalPage extends React.Component {
               </Androw>
             </View>
             <View style={ContainerStyles.containerSignupBottom} />
-          </View>
+          
         </ScrollView>
       </SafeAreaView>
     );

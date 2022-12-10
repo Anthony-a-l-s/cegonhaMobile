@@ -117,7 +117,7 @@ export default class GuestScreen extends React.Component {
           const stringIdParto = '' + idParto;
           AsyncStorage.setItem('idPreNatalGuest', stringIdPreNatal);
           AsyncStorage.setItem('idPartoGuest', stringIdParto);
-          this.props.navigation.push('FoundHospitalScreen');
+          this.props.navigation.push('GuestFoundHospitalScreen');
         })
         .catch((err) => {
           // eslint-disable-next-line no-alert
@@ -303,7 +303,7 @@ export default class GuestScreen extends React.Component {
         <View style={ContainerStyles.welcomeContainer}>
           <View style={ViewStyles.circle4}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('InitialScreen')}
+              onPress={() => this.props.navigation.navigate('InicialScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
               {/*<Arrow />*/}
             </TouchableOpacity>
