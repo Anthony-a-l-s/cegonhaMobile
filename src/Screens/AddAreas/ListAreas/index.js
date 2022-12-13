@@ -11,20 +11,19 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import Arrow from '../../../../../images/arrow-left-curved.svg';
-//import Pregnant from '../../../../../images/cross.svg';
+//import Arrow from '../../../../images/arrow-left-curved.svg';
+//import Pregnant from '../../../../images/cross.svg';
 import {TextInput} from 'react-native-paper';
-import BackIcon from 'react-native-vector-icons/AntDesign';
 import {
   ButtonStyles,
   ContainerStyles,
   InputStyles,
   TextStyles,
   ViewStyles,
-} from '../../styles';
-import api from '../../services/api';
+} from '../../../styles';
+import api from '../../../services/api';
 
-export default class CenterMedicalScreen extends React.Component {
+export default class ListAreasScreen extends React.Component {
   constructor(props) {
     super(props);
     this.getToken();
@@ -45,11 +44,8 @@ export default class CenterMedicalScreen extends React.Component {
   };
   componentDidMount() {
     Dimensions.addEventListener('change', this.onChange);
-    this.findHospital('');
   }
-  /*componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.onChange);
-  }*/
+ 
   onChangeHandle(state, value) {
     this.setState({
       [state]: value,
@@ -94,21 +90,19 @@ export default class CenterMedicalScreen extends React.Component {
   goEdit = async id => {
     await AsyncStorage.removeItem('idHospitalEdit');
     await AsyncStorage.setItem('idHospitalEdit', JSON.stringify(id));
-    this.props.navigation.push('EditiCenterMedicalScreen');
+    this.props.navigation.push('EditCoveredAddressScreen');
   };
-  goDelete = async id => {
-    api
-      .delete('medical-center/' + id)
-      .then(
-        alert('Centro Médico deletado com sucesso!'),
-      )
-      .catch(() => {
-        alert('Erro na remoção!');
-      });
-    this.props.navigation.navigate('AdminScreen')
-    this.props.navigation.navigate('CenterMedicalScreen')
-    //this.props.navigation.push('UserScreen');
-  };
+  handleDelete = async id => {
+    api.delete("cover-address/" + id)
+        .then( () => {
+          alert("Endereço deletado com sucesso!")
+          this.props.navigation.navigate('AdminScreen')
+          this.props.navigation.navigate('ListAreasScreen')
+          })
+          .catch(err => {
+            alert('Algo deu errado!');
+          });
+  }
   renderItem = ({item}) => {
     return (
       <View
@@ -124,7 +118,9 @@ export default class CenterMedicalScreen extends React.Component {
           <Text style={TextStyles.text1}>
             {item.city}, {item.uf}
           </Text>
-          <Text style={TextStyles.text2}>{item.name}</Text>
+          <Text style={TextStyles.text2}>
+            {item.street}, {item.number_start} - {item.number_end}
+          </Text>
           <Text style={TextStyles.text3}>{item.cep}</Text>
         </View>
         <TouchableOpacity onPress={() => this.goEdit(item.id)}>
@@ -133,7 +129,7 @@ export default class CenterMedicalScreen extends React.Component {
             <Text style={TextStyles.coloredButtonText}>EDITAR</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.goDelete(item.id)}>
+        <TouchableOpacity onPress={() => this.handleDelete(item.id)}>
           <View
             style={[ButtonStyles.coloredbutton, {backgroundColor: '#7BE495'}]}>
             <Text style={TextStyles.coloredButtonText}>EXCLUIR</Text>
@@ -146,9 +142,13 @@ export default class CenterMedicalScreen extends React.Component {
     this.makeRemoteRequest(text);
   }
   makeRemoteRequest(text) {
+    const headers = {
+      Authorization: this.state.token,
+    };
     this.setState({loading: true});
+    console.log(this.state.token);
     api
-      .get('medical-center/' + text)
+      .get('cover-address-street/' + text, {headers: headers})
       .then(res => {
         this.setState({
           loading: false,
@@ -171,17 +171,16 @@ export default class CenterMedicalScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('AdminScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              <BackIcon name="back" size={30} color='#7BE495' />
               {/*<Arrow />*/}
             </TouchableOpacity>
           </View>
         </View>
         <View style={ContainerStyles.containerPasswordBottom}>
-          <Text style={TextStyles.mainBlueText}>Centros Médicos</Text>
+          <Text style={TextStyles.mainBlueText}>Edite um Endereço</Text>
           <Text style={TextStyles.mainGreenText}>
-            Digite o nome e procure o centro
+            Digite o nome e procure o endereço
           </Text>
-          <Text style={TextStyles.subGreenText}>médico que irá editar ou excluir</Text>
+          <Text style={TextStyles.subGreenText}>que irá editar</Text>
         </View>
         <Androw style={ViewStyles.shadow}>
           <LinearGradient

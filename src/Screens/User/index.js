@@ -8,6 +8,9 @@ import Group from '../../images/groupicon.svg';
 import {ContainerStyles, TextStyles, ViewStyles} from '../../styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExitIcon from 'react-native-vector-icons/AntDesign';
+import EditIcon from 'react-native-vector-icons/AntDesign';
+import AddressIcon from 'react-native-vector-icons/Entypo';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 
 const windowHeight = Dimensions.get('window').height;
 export default class UserScreen extends React.Component {
@@ -35,6 +38,7 @@ export default class UserScreen extends React.Component {
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
               {/*<HospitalIcon width={40} height={40} />*/}
+              <EditIcon name='edit' size={40} color='#7BE495' style={{marginTop: 15}}/>
             </View>
             <View style={ContainerStyles.textContainer}>
               <Text style={TextStyles.text1}>Usuário</Text>
@@ -50,6 +54,7 @@ export default class UserScreen extends React.Component {
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
               {/*<Group width={40} height={40} />*/}
+              <AddressIcon name='location' size={30} color='#7BE495' style={{marginTop: 15}}/>
             </View>
             <View style={ContainerStyles.textContainer}>
               <Text style={TextStyles.text1}>Cobertura de endereços</Text>
@@ -64,7 +69,7 @@ export default class UserScreen extends React.Component {
           onPress={() => this.props.navigation.navigate('LoginScreen')}>
           <View style={ContainerStyles.infoContainer}>
             <View>
-             <ExitIcon name="close" size={40} color='#7BE495'/>
+             <ExitIcon name='close' size={40} color='#7BE495' style={{marginTop: 15}}/>
             </View>
             <View style={ContainerStyles.textContainer}>
               <Text style={TextStyles.text2}>Sair</Text>

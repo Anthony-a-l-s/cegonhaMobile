@@ -12,13 +12,14 @@ import {
   TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import Icon from 'react-native-vector-icons/AntDesign';
 import Androw from 'react-native-androw';
 //import Arrow from '../../images/arrow-left-curved.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TextInputMask} from 'react-native-masked-text';
 import api from '../../../services/api';
 import {Button} from 'react-native-paper';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import {
   ButtonStyles,
   ContainerStyles,
@@ -215,6 +216,7 @@ export default class EditUserScreen extends React.Component {
                   onPress={() => this.goBack()}
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
                   {/*<Arrow />*/}
+                  <BackIcon name="back" size={30} color='#7BE495' />
                 </TouchableOpacity>
               </View>
             </View>

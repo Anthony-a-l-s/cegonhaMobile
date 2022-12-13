@@ -10,7 +10,7 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import Icon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 import api from '../../../services/api';
@@ -19,6 +19,7 @@ import {Button} from 'react-native-paper';
 import {TextInputMask} from 'react-native-masked-text';
 import Androw from 'react-native-androw';
 import VisibilityIcon from 'react-native-vector-icons/MaterialIcons';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import {Picker} from '@react-native-picker/picker';
 
 import {
@@ -287,6 +288,7 @@ export default class AddUserScreen extends React.Component {
                     this.props.navigation.navigate('AdminScreen')
                   }
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
+                    <BackIcon name="back" size={30} color='#7BE495' />
                   {/*<Arrow />*/}
                 </TouchableOpacity>
               </View>
@@ -308,7 +310,7 @@ export default class AddUserScreen extends React.Component {
                   backgroundColor: 'white',
                   elevation: 5,
                 }}>
-                <Icon name="user" size={65} color="#282a36" />
+                <Icon name="adduser" size={65} color="#282a36" />
               </View>
 
               <Androw style={ViewStyles.shadow}>

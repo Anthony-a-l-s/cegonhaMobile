@@ -2,6 +2,11 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions,ScrollView} from 'react-native';
 import ExitIcon from 'react-native-vector-icons/AntDesign';
+import HospitalIcon from 'react-native-vector-icons/MaterialIcons';
+import UserIcon from 'react-native-vector-icons/AntDesign'
+import AddAddresIcon from 'react-native-vector-icons/MaterialIcons'
+import AddressIcon from 'react-native-vector-icons/Entypo'
+import PlusIcon from 'react-native-vector-icons/Entypo'
 /*import Development from '../../../images/webdevelopment.svg';
 import HospitalIcon from '../../../images/hhospital.svg';
 import Hospital from '../../../images/hospitalicon.svg';
@@ -32,6 +37,7 @@ export default class AdminScreen extends React.Component {
           onPress={() => this.props.navigation.navigate('AddUserScreen')}>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
+            <UserIcon name='adduser' solid size={40} color='#7BE495' style={{marginTop: 15}}/>
               {/*<HospitalIcon width={40} height={40} />*/}
             </View>
             <View style={ContainerStyles.textContainer}>
@@ -46,6 +52,7 @@ export default class AdminScreen extends React.Component {
           onPress={() => this.props.navigation.navigate('ListUsersScreen')}>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
+            <UserIcon name='user' solid size={40} color='#7BE495' style={{marginTop: 15}}/>
               {/*<HospitalIcon width={40} height={40} />*/}
             </View>
             <View style={ContainerStyles.textContainer}>
@@ -57,9 +64,11 @@ export default class AdminScreen extends React.Component {
         </TouchableOpacity>
         <View style={ViewStyles.separator} />
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('AdminHospitalScreen')}>
+          onPress={() => this.props.navigation.navigate('AddCenterMedicalScreen')}>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
+            <PlusIcon name='plus' solid size={20} color='#7BE495' style={{marginBottom: -5}}/>
+            <HospitalIcon name='location-city' solid size={40} color='#7BE495' />
               {/*<HospitalIcon width={40} height={40} />*/}
             </View>
             <View style={ContainerStyles.textContainer}>
@@ -75,6 +84,7 @@ export default class AdminScreen extends React.Component {
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
               {/*<Hospital width={40} height={40} />*/}
+              <HospitalIcon name='location-city' solid size={40} color='#7BE495' style={{marginTop: 15}}/>
             </View>
             <View style={ContainerStyles.textContainer}>
               <Text style={TextStyles.text1}>Informações de Centros Médicos</Text>
@@ -88,10 +98,11 @@ export default class AdminScreen extends React.Component {
         <View style={ViewStyles.separator} />
         <TouchableOpacity
           onPress={() =>
-            this.props.navigation.navigate('AdminChooseTypeCover')
+            this.props.navigation.navigate('AddAreaScreen')
           }>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
+            <AddAddresIcon name='add-location' solid size={40} color='#7BE495' style={{marginTop: 15}}/>
               {/*<Group width={40} height={40} />*/}
             </View>
             <View style={ContainerStyles.textContainer}>
@@ -105,9 +116,10 @@ export default class AdminScreen extends React.Component {
         <View style={ViewStyles.separator} />
 
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('AdminEditAddress')}>
+          onPress={() => this.props.navigation.navigate('ListAreasScreen')}>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>
+            <AddressIcon name='location' solid size={30} color='#7BE495' style={{marginTop: 15}}/>
               {/*<Group width={40} height={40} />*/}
             </View>
             <View style={ContainerStyles.textContainer}>

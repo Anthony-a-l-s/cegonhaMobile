@@ -14,20 +14,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import Arrow from '../../../../../images/arrow-left-curved.svg';
 //import Pregnant from '../../../../../images/cross.svg';
 import {TextInput} from 'react-native-paper';
-import BackIcon from 'react-native-vector-icons/AntDesign';
 import {
   ButtonStyles,
   ContainerStyles,
   InputStyles,
   TextStyles,
   ViewStyles,
-} from '../../styles';
-import api from '../../services/api';
+} from '../../../styles';
+import api from '../../../services/api';
 
-export default class CenterMedicalScreen extends React.Component {
+export default class ChooseCenterMedicalSreen extends React.Component {
   constructor(props) {
     super(props);
-    this.getToken();
     this.state = {
       loading: false,
       data: [],
@@ -35,21 +33,13 @@ export default class CenterMedicalScreen extends React.Component {
       error: null,
       findText: '',
       number: 0,
-      token: '',
     };
   }
 
-  getToken = async () => {
-    const token = await AsyncStorage.getItem('token');
-    this.setState({token: token});
-  };
   componentDidMount() {
     Dimensions.addEventListener('change', this.onChange);
-    this.findHospital('');
   }
-  /*componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.onChange);
-  }*/
+
   onChangeHandle(state, value) {
     this.setState({
       [state]: value,
@@ -80,6 +70,7 @@ export default class CenterMedicalScreen extends React.Component {
     if (!this.state.loading) {
       return null;
     }
+
     return (
       <View
         style={{
@@ -91,23 +82,10 @@ export default class CenterMedicalScreen extends React.Component {
       </View>
     );
   };
-  goEdit = async id => {
-    await AsyncStorage.removeItem('idHospitalEdit');
-    await AsyncStorage.setItem('idHospitalEdit', JSON.stringify(id));
-    this.props.navigation.push('EditiCenterMedicalScreen');
-  };
-  goDelete = async id => {
-    api
-      .delete('medical-center/' + id)
-      .then(
-        alert('Centro Médico deletado com sucesso!'),
-      )
-      .catch(() => {
-        alert('Erro na remoção!');
-      });
-    this.props.navigation.navigate('AdminScreen')
-    this.props.navigation.navigate('CenterMedicalScreen')
-    //this.props.navigation.push('UserScreen');
+  goAdd = async id => {
+    await AsyncStorage.removeItem('idHospitalAdd');
+    await AsyncStorage.setItem('idHospitalAdd', JSON.stringify(id));
+    this.props.navigation.navigate('ChooseCenterMedical2');
   };
   renderItem = ({item}) => {
     return (
@@ -119,24 +97,20 @@ export default class CenterMedicalScreen extends React.Component {
         <View style={ContainerStyles.containerIcons}>
           {/*<Pregnant width={45} height={45} />*/}
         </View>
-
-        <View style={[ContainerStyles.textContainer, {width: 180}]}>
+        <View style={[ContainerStyles.textContainer, {width: 190}]}>
           <Text style={TextStyles.text1}>
             {item.city}, {item.uf}
           </Text>
           <Text style={TextStyles.text2}>{item.name}</Text>
           <Text style={TextStyles.text3}>{item.cep}</Text>
         </View>
-        <TouchableOpacity onPress={() => this.goEdit(item.id)}>
+        <TouchableOpacity onPress={() => this.goAdd(item.id)}>
           <View
-            style={[ButtonStyles.coloredbutton, {backgroundColor: '#7BE495'}]}>
-            <Text style={TextStyles.coloredButtonText}>EDITAR</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.goDelete(item.id)}>
-          <View
-            style={[ButtonStyles.coloredbutton, {backgroundColor: '#7BE495'}]}>
-            <Text style={TextStyles.coloredButtonText}>EXCLUIR</Text>
+            style={[
+              ButtonStyles.coloredbutton,
+              {backgroundColor: '#282a36', width: 80},
+            ]}>
+            <Text style={TextStyles.coloredButtonText}>ADICIONAR</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -147,8 +121,11 @@ export default class CenterMedicalScreen extends React.Component {
   }
   makeRemoteRequest(text) {
     this.setState({loading: true});
+    const headers = {
+      Authorization: this.state.token,
+    };
     api
-      .get('medical-center/' + text)
+      .get('medical-center/' + text, {headers: headers})
       .then(res => {
         this.setState({
           loading: false,
@@ -159,6 +136,11 @@ export default class CenterMedicalScreen extends React.Component {
         this.setState({error, loading: false});
       });
   }
+  goBack = async () => {
+    AsyncStorage.removeItem('idUBSAdd');
+    AsyncStorage.removeItem('AddressType');
+    this.props.navigation.push('AddAreaScreen');
+  };
   render() {
     return (
       <View
@@ -171,17 +153,18 @@ export default class CenterMedicalScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('AdminScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              <BackIcon name="back" size={30} color='#7BE495' />
               {/*<Arrow />*/}
             </TouchableOpacity>
           </View>
         </View>
         <View style={ContainerStyles.containerPasswordBottom}>
-          <Text style={TextStyles.mainBlueText}>Centros Médicos</Text>
+          <Text style={TextStyles.mainBlueText}>Adicione o local do Parto</Text>
           <Text style={TextStyles.mainGreenText}>
-            Digite o nome e procure o centro
+            Digite o nome e procure o centro médico
           </Text>
-          <Text style={TextStyles.subGreenText}>médico que irá editar ou excluir</Text>
+          <Text style={TextStyles.subGreenText}>
+            que irá adicionar o endereço
+          </Text>
         </View>
         <Androw style={ViewStyles.shadow}>
           <LinearGradient

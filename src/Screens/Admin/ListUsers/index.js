@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import EditIcon from 'react-native-vector-icons/AntDesign';
 import DeleteIcon from 'react-native-vector-icons/EvilIcons';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import AddressIcon from 'react-native-vector-icons/Entypo';
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
@@ -155,8 +156,7 @@ export default class ListUsersScreen extends React.Component {
                   ButtonStyles.coloredbutton,
                   {backgroundColor: '#7BE495', margin: 5},
                 ]}>
-                {/*<EditIcon name="edit" size={25} color="#FFFFFF" />*/}
-                <Text>E</Text>
+                <EditIcon name="edit" size={25} color="#FFFFFF" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.goAdress(item.id, item.cpf)}>
@@ -165,8 +165,7 @@ export default class ListUsersScreen extends React.Component {
                   ButtonStyles.coloredbutton,
                   {backgroundColor: '#7BE495', margin: 5},
                 ]}>
-                {/*<AddressIcon name="address" size={25} color="#FFFFFF" />*/}
-                <Text>A</Text>
+                <AddressIcon name="address" size={25} color="#FFFFFF" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.goDelete(item.id)}>
@@ -175,8 +174,7 @@ export default class ListUsersScreen extends React.Component {
                   ButtonStyles.coloredbutton,
                   {backgroundColor: '#7BE495', margin: 5},
                 ]}>
-                {/*<DeleteIcon name="trash" size={25} color="#FFFFFF" />*/}
-                <Text>D</Text>
+                <DeleteIcon name="trash" size={25} color="#FFFFFF" />
               </View>
             </TouchableOpacity>
           </View>
@@ -215,6 +213,7 @@ export default class ListUsersScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('AdminScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
+              <BackIcon name="back" size={30} color='#7BE495' />
               {/*<Arrow />*/}
             </TouchableOpacity>
           </View>

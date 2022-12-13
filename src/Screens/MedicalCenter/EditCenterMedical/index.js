@@ -9,18 +9,18 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
-  PickerIOSBase,
+  TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import BackIcon from 'react-native-vector-icons/AntDesign';
 import Androw from 'react-native-androw';
-//import Arrow from '../../images/arrow-left-curved.svg';
+//import Arrow from '../../../../../../images/arrow-left-curved.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//import TextInputMask from 'react-native-text-input-mask';
 import api from '../../../services/api';
-import {Button, TextInput} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
+import {TextInputMask} from 'react-native-masked-text';
 import {
   ButtonStyles,
   ContainerStyles,
@@ -29,27 +29,36 @@ import {
   ViewStyles,
 } from '../../../styles';
 const windowHeight = Dimensions.get('window').height;
-export default class EditAdressScreen extends React.Component {
+export default class EditiCenterMedicalScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.getData();
   }
   state = {
-    street: '',
-    number: '',
     cep: '',
+    image: 'da',
+    latitude: '',
+    longitude: '',
+    number: null,
     district: '',
+    street: '',
     city: '',
     uf: '',
+    name: '',
+    phone: '',
+    errorMessageNumber: '',
     errorMessageCep: '',
     errorMessageStreet: '',
-    errorMessageNumber: '',
+    errorMessagePhone: '',
     errorMessageDistrict: '',
     errorMessageCity: '',
     errorMessageUf: '',
+    errorMessageLatitude: '',
+    errorMessageLongitude: '',
+    errorMessageImage: '',
+    errorMessageName: '',
   };
-
   onContentSizeChange = (contentWidth, contentHeight) => {
     this.setState({screenHeight: contentHeight});
   };
@@ -66,40 +75,55 @@ export default class EditAdressScreen extends React.Component {
     Dimensions.addEventListener('change', this.onChange);
   }
 
-  /*componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.onChange);
-  }*/
-
   goBack = async () => {
     this.setState({
-      street: '',
-      number: '',
       cep: '',
+      number: null,
       district: '',
+      street: '',
       city: '',
       uf: '',
+      name: '',
+      phone: '',
+      latitude: '',
+      longitude: '',
+      image: 'da',
     });
-    this.props.navigation.push('AdressScreen');
+    AsyncStorage.removeItem('idHospitalEdit');
+    this.props.navigation.push('MedicalCenterMain');
   };
   getData = async () => {
     try {
-      const idAdress = await AsyncStorage.getItem('idAdressEdit');
-      if (idAdress != null) {
+      const valID = await AsyncStorage.getItem('idHospitalEdit');
+      if (valID != null) {
         api
-          .get('adress/' + idAdress)
-          .then(async res => {
-            await AsyncStorage.setItem('idAdress', res.data[0].id.toString());
+          .get('medical-center-id/' + valID)
+
+          .then(res => {
+            if (res.data.number == null) {
+              this.setState({
+                number: '',
+              });
+            } else {
+              this.setState({
+                number: '' + res.data.number,
+              });
+            }
             this.setState({
-              street: res.data[0].street,
-              number: res.data[0].number.toString(),
-              cep: res.data[0].cep,
-              district: res.data[0].district,
-              city: res.data[0].city,
-              uf: res.data[0].uf,
+              image: res.data.image,
+              name: res.data.name,
+              phone: res.data.phone,
+              street: res.data.street,
+              district: res.data.district,
+              city: res.data.city,
+              uf: res.data.uf,
+              cep: res.data.cep,
+              latitude: res.data.latitude.toFixed(14),
+              longitude: res.data.longitude.toFixed(14),
             });
           })
-          .catch(err => {
-            alert('Algo deu errado!' + err);
+          .catch(() => {
+            alert('Algo deu errado!');
           });
       }
       //valor armazenado
@@ -109,33 +133,64 @@ export default class EditAdressScreen extends React.Component {
   };
   doDelete = async () => {
     const valID = await AsyncStorage.getItem('idHospitalEdit');
-    console.log(valID);
+ 
     api
       .delete('hospital/' + valID)
       .then(res => {
         this.setState({
           cep: '',
-          number: '',
+          number: null,
           district: '',
           street: '',
           city: '',
           uf: '',
           name: '',
           phone: '',
-          image: '',
-          latitude: '',
-          longitude: '',
+          image:'',
+          latitude:'',
+          longitude:'',
         });
         AsyncStorage.removeItem('idHospitalEdit');
-        this.props.navigation.push('AdressScreen');
+        this.props.navigation.push('AdminScreen');
+        this.props.navigation.push('CenterMedicalScreen');
       })
       .catch(() => {
         alert('Algo deu errado!');
       });
   };
 
-  checkFieldEmpty(cep, street, number, district, city, uf) {
+  checkFieldEmpty(name, image, latitude, longitude, phone, cep, street, number, district, city, uf) {
     var errors = 0;
+    if (!name) {
+      this.setState({
+        errorMessageName: 'Campo obrigatório!',
+      });
+      errors++;
+    }
+    if (!image) {
+      this.setState({
+        errorMessageImage: 'Campo obrigatório!',
+      });
+      errors++;
+    }
+    if (!latitude) {
+      this.setState({
+        errorMessageLatitude: 'Campo obrigatório!',
+      });
+      errors++;
+    }
+    if (!longitude) {
+      this.setState({
+        errorMessageLongitude: 'Campo obrigatório!',
+      });
+      errors++;
+    }
+    if (!phone) {
+      this.setState({
+        errorMessagePhone: 'Campo obrigatório!',
+      });
+      errors++;
+    }
     if (!cep) {
       this.setState({
         errorMessageCep: 'Campo obrigatório!',
@@ -178,57 +233,104 @@ export default class EditAdressScreen extends React.Component {
       return false;
     }
   }
+
+  checkNumberValid(number) {
+    if (isNaN(number) == false) {
+      if (parseInt(number) > 0) {
+        return true;
+      }
+    } else {
+      if (number == 's/n') return true;
+    }
+    this.setState({
+      errorMessageNumber:
+        'Digite apenas números positivos ou s/n para endereço sem número',
+    });
+    return false;
+  }
+
   doEdit = async () => {
-    const valIdUser = await AsyncStorage.getItem('idUserEdit');
-    const valIdAdress = await AsyncStorage.getItem('idAdressEdit');
-    const {street, number, cep, district, city} = this.state;
+    const valID = await AsyncStorage.getItem('idHospitalEdit');
+    const {
+      cep,
+      number,
+      street,
+      district,
+      uf,
+      city,
+      name,
+      phone,
+      image,
+      latitude,
+      longitude
+    } = this.state;
+    
+    var errors = false;
+
     if (
       this.checkFieldEmpty(
+        this.state.name, 
+        this.state.image, 
+        this.state.latitude, 
+        this.state.longitude, 
+        this.state.phone,
         this.state.cep,
         this.state.street,
         this.state.number,
         this.state.district,
         this.state.city,
         this.state.uf,
-      ) === false
-    ) {
-      const req = {
-        street: street,
-        number: parseInt(number),
-        cep: cep,
-        district: district,
-        city: city,
-        uf: this.state.uf,
-      };
-      console.log(req)
-      api
-        .put('adress/' + valIdAdress + '/' + valIdUser, req)
+      ) == true ||
+      this.checkNumberValid(this.state.number) == false
+    )
+      errors = true;
+      
+      if(errors === false) {
+        const req = {
+          name: name,
+          phone: phone.replaceAll('(', '').replaceAll(')', '').replaceAll('-', '').replaceAll(' ', ''),
+          cep: cep,
+          street: street,
+          uf: this.state.uf,
+          city: city,
+          number: number,
+          district: district,
+          latitude: latitude,
+          longitude: longitude,
+          image: image
+        };
+      api.put('medical-center/' + valID, req)
         .then(() => {
           alert('Mudança realizada com sucesso!');
-          this.back();
+          this.props.navigation.push('CenterMedicalScreen');
         })
         .catch(() => {
           alert('Mudança deu errada!');
         });
-    }
-  };
-  back = async () => {
-    if (await AsyncStorage.getItem('type') === '1') {
-      this.props.navigation.navigate('AdressScreen');
-    } else {
-      this.props.navigation.navigate('AdressScreen');
-    }
+        
+    } 
   };
   render() {
     const scrollEnabled = this.state.screenHeight > windowHeight;
-    const {street, number, cep, district, city, uf} = this.state;
+    const {
+      cep,
+      number,
+      street,
+      district,
+      uf,
+      city,
+      name,
+      phone,
+      image,
+      latitude,
+      longitude
+    } = this.state;
     return (
       <SafeAreaView style={ContainerStyles.sContainer}>
         <ScrollView
-          style={ContainerStyles.sContainer}
-          contentContainerStyle={ContainerStyles.scrollViewContainer}
+          style={{flex: 1}}
+          contentContainerStyle={ContainerStyles.scrollView}
           scrollEnabled={scrollEnabled}
-          nestedScrollEnabled = {true}
           onContentSizeChange={this.onContentSizeChange}>
           <View
             style={[
@@ -238,27 +340,29 @@ export default class EditAdressScreen extends React.Component {
             <View style={ContainerStyles.welcomeContainer}>
               <View style={ViewStyles.circle4}>
                 <TouchableOpacity
-                  onPress={() => this.back()}
+                  onPress={() =>
+                    this.props.navigation.navigate('CenterMedicalScreen')
+                  }
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-                  <BackIcon name="back" size={30} color='#7BE495' />
+                    <BackIcon name="back" size={30} color='#7BE495' />
                   {/*<Arrow />*/}
                 </TouchableOpacity>
               </View>
             </View>
 
-           
+            
               <Text
                 style={[
                   TextStyles.mainBlueText3,
                   {alignSelf: 'center', width: '80%'},
                 ]}>
-                {street}, {number}
+                {name}
               </Text>
               <Text style={TextStyles.mainGreenText}>
                 Altere os campos com dados válidos{' '}
               </Text>
               <Text style={TextStyles.subGreenText}>
-                do endereço para alterá-lo
+                do Hospital para alterá-lo
               </Text>
               <View
                 style={{
@@ -272,8 +376,268 @@ export default class EditAdressScreen extends React.Component {
                   backgroundColor: 'white',
                   elevation: 5,
                 }}>
-                <Icon name="location" size={65} color="#282a36" />
+                <Image
+                  style={{width: 120, height: 120, borderRadius: 100}}
+                  source={{
+                    uri: this.state.image,
+                  }}
+                />
+
+                <TouchableOpacity
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: '#56c596',
+                    elevation: 10,
+                    top: -5,
+                    width: 50,
+                    height: 50,
+                    borderRadius: 50,
+                    right: -5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{position: 'absolute', color: 'white', right: 7}}>
+                    +
+                  </Text>
+                  <Icon name="image" size={20} color="white" />
+                </TouchableOpacity>
               </View>
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Nome"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.name = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={name}
+                    onChangeText={value => (
+                      this.onChangeHandle('name', value),
+                      this.setState({
+                        errorMessageName: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageName}
+              </Text>
+
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Imagem"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.image = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={image}
+                    onChangeText={value => (
+                      this.onChangeHandle('image', value),
+                      this.setState({
+                        errorMessageImage: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageImage}
+              </Text>
+
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInputMask
+                    mode="outlined"
+                    placeholder="Telefone"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.phone = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#000000"
+                    theme={{
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    type={'cel-phone'}
+                    options={{
+                      maskType: 'BRL',
+                      withDDD: true,
+                      dddMask: '(99) '
+                    }}
+                    value={phone}
+                    onChangeText={value => (
+                      this.onChangeHandle('phone', value),
+                      this.setState({
+                        errorMessagePhone: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessagePhone}
+              </Text>
+
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Latitude"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.latitude = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={latitude}
+                    onChangeText={value => (
+                      this.onChangeHandle('latitude', value),
+                      this.setState({
+                        errorMessageLatitude: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageLatitude}
+              </Text>
+
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Latitude"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.longitude = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={longitude}
+                    onChangeText={value => (
+                      this.onChangeHandle('longitude', value),
+                      this.setState({
+                        errorMessageLongitude: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageLongitude}
+              </Text>
+              
+              <Androw style={ViewStyles.shadow}>
+                <LinearGradient
+                  colors={['#FFFFFF', '#FFFFFF']}
+                  style={ViewStyles.linearGradient2}>
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Latitude"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    ref={input => {
+                      this.cep = input;
+                    }}
+                    style={InputStyles.inputBox}
+                    placeholderTextColor="#D0DAD1"
+                    underlineColor="#FFFFFF"
+                    theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
+                      fonts: {regular: ''},
+                      roundness: 18,
+                    }}
+                    value={cep}
+                    onChangeText={value => (
+                      this.onChangeHandle('cep', value),
+                      this.setState({
+                        errorMessageCep: null,
+                      })
+                    )}
+                    fontFamily={'Montserrat-Medium'}
+                  />
+                </LinearGradient>
+              </Androw>
+              <Text style={TextStyles.textError}>
+                {this.state.errorMessageCep}
+              </Text>
+
 
               <Androw style={ViewStyles.shadow}>
                 <LinearGradient
@@ -352,44 +716,8 @@ export default class EditAdressScreen extends React.Component {
               </Androw>
               <Text style={TextStyles.textError}>
                 {this.state.errorMessageNumber}
-              </Text>             
-
-              <Androw style={ViewStyles.shadow}>
-                <LinearGradient
-                  colors={['#FFFFFF', '#FFFFFF']}
-                  style={ViewStyles.linearGradient2}>
-                  <TextInput
-                    mode="outlined"
-                    placeholder="CEP"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    style={InputStyles.inputBox}
-                    placeholderTextColor="#D0DAD1"
-                    underlineColor="#FFFFFF"
-                    theme={{
-                      colors: {
-                        text: '#282a36',
-                        primary: '#7BE495',
-                        placeholder: '#D0DAD1',
-                      },
-                      fonts: {regular: ''},
-                      roundness: 18,
-                    }}
-                    value={cep}
-                    onChangeText={value => (
-                      this.onChangeHandle('cep', value),
-                      this.setState({
-                        errorMessageCep: null,
-                      })
-                    )}
-                    fontFamily={'Montserrat-Medium'}
-                  />
-                </LinearGradient>
-              </Androw>
-              <Text style={TextStyles.textError}>
-                {this.state.errorMessageCep}
               </Text>
-
+              
               <Androw style={ViewStyles.shadow}>
                 <LinearGradient
                   colors={['#FFFFFF', '#FFFFFF']}
@@ -488,6 +816,7 @@ export default class EditAdressScreen extends React.Component {
                       height: 50,
                       color: '#000000',
                     }}
+                    
                     onValueChange={(itemValue, itemIndex) =>
                       this.setState({
                         uf: itemValue,
@@ -560,15 +889,13 @@ export default class EditAdressScreen extends React.Component {
                     style={ButtonStyles.customButton}
                     onPress={() => this.doEdit()}>
                     <Button color="white">
-                      <Text style={TextStyles.buttonText}>EDITAR ENDEREÇO</Text>
+                      <Text style={TextStyles.buttonText}>EDITAR HOSPITAL</Text>
                     </Button>
                   </TouchableOpacity>
                 </LinearGradient>
               </Androw>
-              </View>
             <View style={ContainerStyles.containerSignupBottom} />
-           
-         
+          </View>
         </ScrollView>
       </SafeAreaView>
     );

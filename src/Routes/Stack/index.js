@@ -15,6 +15,14 @@ import AdminScreen from '../../Screens/Admin';
 import AddUserScreen from '../../Screens/Admin/AddUser';
 import ListUsersScreen from '../../Screens/Admin/ListUsers';
 import CenterMedicalScreen from '../../Screens/MedicalCenter';
+import EditiCenterMedicalScreen from '../../Screens/MedicalCenter/EditCenterMedical';
+import AddCenterMedicalScreen from '../../Screens/MedicalCenter/AddCenterMedical';
+import AddAreaScreen from '../../Screens/AddAreas';
+import AddCoveredAddressScreen from '../../Screens/AddAreas/AddCoveredAddress';
+import ChooseCenterMedicalSreen from '../../Screens/AddAreas/ChooseCenterMedical';
+import ChooseCenterMedical2 from '../../Screens/AddAreas/ChooseCenterMedical2';
+import EditCoveredAddressScreen from '../../Screens/AddAreas/EditCoveredAddress';
+import ListAreasScreen from '../../Screens/AddAreas/ListAreas';
 
 
 const { Navigator, Screen } = createNativeStackNavigator()
@@ -50,6 +58,22 @@ export default function () {
                 component={ListUsersScreen} />
             <Screen name='CenterMedicalScreen'
                 component={CenterMedicalScreen} />
+            <Screen name='EditiCenterMedicalScreen'
+                component={EditiCenterMedicalScreen} />
+            <Screen name='AddCenterMedicalScreen'
+                component={AddCenterMedicalScreen} />
+            <Screen name='AddAreaScreen'
+                component={AddAreaScreen} />
+            <Screen name='AddCoveredAddressScreen'
+                component={AddCoveredAddressScreen} />
+            <Screen name='ChooseCenterMedicalSreen'
+                component={ChooseCenterMedicalSreen} />
+            <Screen name='ChooseCenterMedical2'
+                component={ChooseCenterMedical2} />
+            <Screen name='EditCoveredAddressScreen'
+                component={EditCoveredAddressScreen} />
+            <Screen name='ListAreasScreen'
+                component={ListAreasScreen} />
         </Navigator>
     )
 }

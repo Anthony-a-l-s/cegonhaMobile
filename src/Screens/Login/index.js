@@ -9,9 +9,12 @@ import {
 } from 'react-native';
 import Androw from 'react-native-androw';
 //import Arrow from '../../images/arrow-left-curved.svg';
+import BackIcon from 'react-native-vector-icons/AntDesign';
+import EyeIcon from 'react-native-vector-icons/Entypo'
+import VisibilityIcon from 'react-native-vector-icons/MaterialIcons';
 
 import LinearGradient from 'react-native-linear-gradient';
-import {TextInput, Button, Checkbox, Snackbar} from 'react-native-paper';
+import { TextInput, Button, Checkbox, Snackbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ButtonStyles,
@@ -23,6 +26,7 @@ import {
 } from '../../styles';
 import api from '../../services/api';
 import { login } from '../../services/auth2';
+import { onPress } from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 const windowHeight = Dimensions.get('window').height;
 
 export default class LoginScreen extends React.Component {
@@ -56,16 +60,16 @@ export default class LoginScreen extends React.Component {
     loading: false,
   };
 
-  onToggleSnackBar = () => this.setState({visible: true});
-  onDismissSnackBar = () => this.setState({visible: false});
+  onToggleSnackBar = () => this.setState({ visible: true });
+  onDismissSnackBar = () => this.setState({ visible: false });
 
   onChangeHandle(state, value) {
     this.setState({
       [state]: value,
     });
   }
-  onChange = ({window, screen}) => {
-    this.setState({dimensions: {window, screen}});
+  onChange = ({ window, screen }) => {
+    this.setState({ dimensions: { window, screen } });
   };
 
   componentDidMount() {
@@ -75,6 +79,7 @@ export default class LoginScreen extends React.Component {
   /*componentDidMount() {
     Dimensions.removeEventListener('change', this.onChange);
   }*/
+
 
   onToggle() {
     setTimeout(() => {
@@ -90,7 +95,7 @@ export default class LoginScreen extends React.Component {
 
   doLogin = async () => {
     Keyboard.dismiss();
-    const {loginuser, loginsenha} = this.state;
+    const { loginuser, loginsenha } = this.state;
     this.setState({
       upColor: '#282a36',
       downColor: '#000000',
@@ -107,10 +112,10 @@ export default class LoginScreen extends React.Component {
       this.setState({
         loading: true,
       });
-         api.post("/login", req)
+      api.post("/login", req)
         .then(res => {
           login(res.data.token)
-          if (res.data.admin === true ) {
+          if (res.data.admin === true) {
             console.log('admin')
             AsyncStorage.removeItem('type');
             AsyncStorage.setItem('type', '1');
@@ -130,11 +135,11 @@ export default class LoginScreen extends React.Component {
               loading: false,
             });
             console.log('não é admin')
-             AsyncStorage.setItem('token', res.data.token);
-             AsyncStorage.removeItem('type');
-             AsyncStorage.setItem('type', '2');
-             AsyncStorage.setItem('nome', res.data.name);
-             AsyncStorage.setItem('cpfUser', res.data.cpf);
+            AsyncStorage.setItem('token', res.data.token);
+            AsyncStorage.removeItem('type');
+            AsyncStorage.setItem('type', '2');
+            AsyncStorage.setItem('nome', res.data.name);
+            AsyncStorage.setItem('cpfUser', res.data.cpf);
 
             this.props.navigation.push('UserScreen');
             this.setState({
@@ -265,20 +270,21 @@ export default class LoginScreen extends React.Component {
   }
 
   render() {
-    const {securetext, loginuser, loginsenha} = this.state;
+    const { securetext, loginuser, loginsenha } = this.state;
 
     return (
       <View
         style={[
           ContainerStyles.containerNoAlign,
-          {justifyContent: 'flex-start'},
+          { justifyContent: 'flex-start' },
         ]}>
         <View style={ContainerStyles.welcomeContainer}>
           <View style={ViewStyles.circle4}>
             <TouchableOpacity
               onPress={() => this.doReturn()}
-              hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
+              hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
               {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
         </View>
@@ -287,7 +293,7 @@ export default class LoginScreen extends React.Component {
           <View
             style={[
               ContainerStyles.containerLogin,
-              {marginTop: windowHeight * 0.2},
+              { marginTop: windowHeight * 0.2 },
             ]}>
             <Snackbar
               visible={this.state.visible}
@@ -304,7 +310,7 @@ export default class LoginScreen extends React.Component {
             <Text
               style={[
                 TextStyles.mainGreenText,
-                {marginTop: windowHeight * 0.01},
+                { marginTop: windowHeight * 0.01 },
               ]}>
               Entre com os dados da sua conta
             </Text>
@@ -329,7 +335,7 @@ export default class LoginScreen extends React.Component {
                       primary: this.state.outlineEmailColor,
                       placeholder: this.state.placeholderEmailColor,
                     },
-                    fonts: {regular: ''},
+                    fonts: { regular: '' },
                     roundness: 18,
                   }}
                   placeholderTextColor="#D0DAD1"
@@ -346,48 +352,59 @@ export default class LoginScreen extends React.Component {
                 <LinearGradient
                   colors={['#FFFFFF', '#FFFFFF']}
                   style={ViewStyles.linearGradient2}>
-                  <TextInput
-                    mode="outlined"
-                    placeholder="Senha"
-                    ref={input => {
-                      this.loginsenha = input;
-                    }}
-                    style={InputStyles.inputBox}
-                    secureTextEntry={securetext}
-                    placeholderTextColor="#D0DAD1"
-                    underlineColor="#FFFFFF"
-                    theme={{
-                      colors: {
-                        text: this.state.placeholderTextColor,
-                        primary: this.state.outlinePasswordColor,
-                        placeholder: this.state.placeholderPasswordColor,
-                      },
-                      fonts: {regular: ''},
-                      roundness: 18,
-                    }}
-                    right={
-                      <TextInput.Icon
-                        onPress={() => {
-                          this.changeicon();
-                        }}
-                        name={this.state.passwordicon}
-                        color="#CDE0C9"
+                  <View style={InputStyles.inputArea}>
+                    <TextInput
+                      mode="outlined"
+                      placeholder="Senha"
+                      ref={input => {
+                        this.loginsenha = input;
+                      }}
+                      style={InputStyles.inputBox}
+                      secureTextEntry={securetext}
+                      placeholderTextColor="#D0DAD1"
+                      underlineColor="#FFFFFF"
+                      theme={{
+                        colors: {
+                          text: this.state.placeholderTextColor,
+                          primary: this.state.outlinePasswordColor,
+                          placeholder: this.state.placeholderPasswordColor,
+                        },
+                        fonts: { regular: '' },
+                        roundness: 18,
+                      }}
+                      right={
+                        <TextInput.Icon
+                          onPress={() => {
+                            this.changeicon();
+                          }}
+                          name={this.state.passwordicon}
+                          color="#CDE0C9"
                         style={ComponentStyles.EyeIcon}
+                        />
+                      }
+                      value={loginsenha}
+                      onChangeText={value =>
+                        this.onChangeHandle('loginsenha', value)
+                      }
+                      fontFamily={'Montserrat-Medium'}
+                    />
+                    {/*<TouchableOpacity
+                      style={InputStyles.iconEye}
+                      onPress={() => this.changeicon()}>
+                      <VisibilityIcon
+                        name={this.state.passwordicon}
+                        color="#D7CFCF"
+                        size={25}
                       />
-                    }
-                    value={loginsenha}
-                    onChangeText={value =>
-                      this.onChangeHandle('loginsenha', value)
-                    }
-                    fontFamily={'Montserrat-Medium'}
-                  />
+                    </TouchableOpacity>*/}
+                  </View>
                 </LinearGradient>
               </Androw>
 
               <TouchableOpacity
                 style={ContainerStyles.checkboxContainer}
                 onPress={() => {
-                  this.setState({checked: !this.state.checked});
+                  this.setState({ checked: !this.state.checked });
                 }}>
                 <Checkbox
                   status={this.state.checked ? 'checked' : 'unchecked'}
@@ -415,7 +432,7 @@ export default class LoginScreen extends React.Component {
                       animating={this.state.loading}
                       size="large"
                       color="#7BE495"
-                      style={{position: 'absolute', alignSelf: 'center'}}
+                      style={{ position: 'absolute', alignSelf: 'center' }}
                     />
                   </TouchableOpacity>
                 </LinearGradient>
@@ -423,26 +440,26 @@ export default class LoginScreen extends React.Component {
               <View
                 style={[
                   ContainerStyles.rowContainer,
-                  {marginTop: windowHeight * 0.04},
+                  { marginTop: windowHeight * 0.04 },
                 ]}>
                 <Text style={TextStyles.bottomText}>Não tem uma conta? </Text>
                 <TouchableOpacity
                   style={TextStyles.buttonText}
                   onPress={() => this.props.navigation.push('SignupScreen')}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                   <Text style={TextStyles.bottomRowText}>Criar agora</Text>
                 </TouchableOpacity>
               </View>
               <View
                 style={[
                   ContainerStyles.rowContainer,
-                  {marginTop: windowHeight * 0.01, marginBottom: '5%'},
+                  { marginTop: windowHeight * 0.01, marginBottom: '5%' },
                 ]}>
                 <Text style={TextStyles.bottomText}>Esqueceu a senha? </Text>
                 <TouchableOpacity
                   style={TextStyles.buttonText}
                   onPress={() => this.props.navigation.push('PasswordScreen')}
-                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                   <Text style={TextStyles.bottomRowText}>Recuperar</Text>
                 </TouchableOpacity>
               </View>

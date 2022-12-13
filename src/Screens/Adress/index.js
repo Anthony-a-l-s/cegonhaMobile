@@ -12,6 +12,7 @@ import {
 import EditIcon from 'react-native-vector-icons/AntDesign';
 import DeleteIcon from 'react-native-vector-icons/EvilIcons';
 import AddressIcon from 'react-native-vector-icons/MaterialIcons';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -177,22 +178,19 @@ export default class AdressScreen extends React.Component {
                                 <TouchableOpacity onPress={() => this.goEdit(item.id, i.id)}>
                                     <View
                                         style={[ButtonStyles.coloredbutton, { backgroundColor: '#7BE495', margin: 5 }]}>
-                                        <Text>E</Text>
-                                        {/*<EditIcon name="edit" size={25} color='#FFFFFF' />*/}
+                                        <EditIcon name="edit" size={25} color='#FFFFFF' />
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.goDelete(item.id, i.id)}>
                                     <View
                                         style={[ButtonStyles.coloredbutton, { backgroundColor: '#7BE495', margin: 5 }]}>
-                                        <Text>D</Text>
-                                        {/*<DeleteIcon name="trash" size={25} color='#FFFFFF' />*/}
+                                        <DeleteIcon name="trash" size={25} color='#FFFFFF' />
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.goLocal(i.street, i.number, i.district, i.city, i.uf, i.cep)} >
                                     <View
                                         style={[ButtonStyles.coloredbutton, { backgroundColor: '#7BE495', margin: 5 }]}>
-                                        <Text>L</Text>
-                                        {/*<AddressIcon name="place" size={25} color='#FFFFFF' />*/}
+                                        <AddressIcon name="place" size={25} color='#FFFFFF' />
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -250,6 +248,7 @@ export default class AdressScreen extends React.Component {
                         <TouchableOpacity
                             onPress={() => this.goBack()}
                             hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
+                             <BackIcon name="back" size={30} color='#7BE495' />
                             {/*<Arrow />*/}
                         </TouchableOpacity>
                     </View>
