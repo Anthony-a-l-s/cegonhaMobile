@@ -11,6 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 //import Arrow from '../../../../images/arrow-left-curved.svg';
 //import Pregnant from '../../../../images/cross.svg';
 import {TextInput} from 'react-native-paper';
@@ -171,7 +172,7 @@ export default class ListAreasScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('AdminScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
         </View>

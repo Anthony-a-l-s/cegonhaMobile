@@ -11,6 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 //import Arrow from '../../../../../images/arrow-left-curved.svg';
 //import Pregnant from '../../../../../images/cross.svg';
 import {TextInput} from 'react-native-paper';
@@ -158,9 +159,9 @@ export default class ChooseCenterMedical2 extends React.Component {
         <View style={ContainerStyles.welcomeContainer}>
           <View style={ViewStyles.circle4}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('AdminFindScreen')}
+              onPress={() => this.goBack()}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
         </View>

@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 //import TextInputMask from 'react-native-text-input-mask';
 import axios from 'axios';
 import api from '../../../services/api';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 //import Arrow from '../../../../../images/arrow-left-curved.svg';
 import {Button, TextInput} from 'react-native-paper';
 import Androw from 'react-native-androw';
@@ -260,7 +261,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                     this.props.navigation.navigate('ChooseCenterMedical2')
                   }
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-                  {/*<Arrow />*/}
+                  <BackIcon name="back" size={30} color='#7BE495' />
                 </TouchableOpacity>
               </View>
             </View>

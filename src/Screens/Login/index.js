@@ -388,15 +388,6 @@ export default class LoginScreen extends React.Component {
                       }
                       fontFamily={'Montserrat-Medium'}
                     />
-                    {/*<TouchableOpacity
-                      style={InputStyles.iconEye}
-                      onPress={() => this.changeicon()}>
-                      <VisibilityIcon
-                        name={this.state.passwordicon}
-                        color="#D7CFCF"
-                        size={25}
-                      />
-                    </TouchableOpacity>*/}
                   </View>
                 </LinearGradient>
               </Androw>

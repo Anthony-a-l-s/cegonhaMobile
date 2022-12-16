@@ -16,18 +16,19 @@ import {
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import MapViewDirections from 'react-native-maps-directions';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import Frame from '../../../images/Frame.png';
 import Location from '../../../images/location.svg';
-import Phone from '../../../images/phone.svg';
-import {ContainerStyles, TextStyles, ViewStyles} from '../../../styles';
+import Phone from 'react-native-vector-icons/Entypo';
+import { ContainerStyles, TextStyles, ViewStyles } from '../../../styles';
 import Arrow from '../../../images/arrow-left-curved.svg';
-import Icon from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/AntDesign';
 import api from '../../../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDwxYwB57tFaJuqdGxXr2xO23_cJODi6ck';
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 export default class GuestFoundUserHospitalScreen extends React.Component {
@@ -70,7 +71,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
     tab2: 0,
     time: 0,
     distance: 0,
-    origin: {latitude: 0, longitude: 0},
+    origin: { latitude: 0, longitude: 0 },
     coordLatitude: 0,
     coordLongitude: 0,
     translateX: new Animated.Value(0),
@@ -84,7 +85,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
   };
   async componentDidMount() {
     Geolocation.getCurrentPosition(
-      async ({coords: {latitude, longitude}}) => {
+      async ({ coords: { latitude, longitude } }) => {
         this.setState({
           origin: {
             latitude,
@@ -92,7 +93,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
           },
         });
       },
-      () => {}, //erro
+      () => { }, //erro
       {
         timeout: 2000,
         enableHighAccuracy: true,
@@ -182,7 +183,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
         //alert('Algo deu errado!');
       });
   };
-  
+
   doCall = async () => {
     let phoneNumber = '';
 
@@ -194,7 +195,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
     Linking.openURL(phoneNumber);
   };
   doCount = async (distance, duration) => {
-    this.setState({time: duration, distance: distance});
+    this.setState({ time: duration, distance: distance });
   };
   doReturn = async () => {
     AsyncStorage.removeItem('idPreNatalGuest');
@@ -215,13 +216,13 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
       ufUbs: '',
       cepUbs: '',
       region: null,
-      destination: {latitude: 0, longitude: 0},
+      destination: { latitude: 0, longitude: 0 },
       latitudeParto: 0,
       latitudePreNatal: 0,
       longitudeParto: 0,
       longitudePreNatal: 0,
     });
-         this.props.navigation.push('SearchScreen');
+    this.props.navigation.push('SearchScreen');
   };
 
   handleSlide = type => {
@@ -237,7 +238,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
         longitude: this.state.longitudePreNatal,
       },
     });
-    let {active, translateX, translateXTabOne, translateXTabTwo} = this.state;
+    let { active, translateX, translateXTabOne, translateXTabTwo } = this.state;
     Animated.spring(translateX, {
       toValue: type,
       duration: 50,
@@ -305,7 +306,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
         longitude: this.state.longitudeParto,
       },
     });
-    let {active, translateX, translateXTabOne, translateXTabTwo} = this.state;
+    let { active, translateX, translateXTabOne, translateXTabTwo } = this.state;
     Animated.spring(translateX, {
       toValue: type,
       duration: 100,
@@ -340,7 +341,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
     }
   };
 
-    render() {
+  render() {
     let {
       xTabOne,
       xTabTwo,
@@ -377,8 +378,8 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
           alignItems: 'center',
           borderRadius: 10,
         }}>
-       
-        <View style={{height: windowHeight * 0.55}} />
+
+        <View style={{ height: windowHeight * 0.55 }} />
         <Text>Pru</Text>
 
         <View style={styles.container}>
@@ -396,7 +397,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               }}>
               <Image
                 source={require('../../../images/pin.png')}
-                style={{width: 30, height: 40}}
+                style={{ width: 30, height: 40 }}
               />
             </Marker>
             <Marker
@@ -406,7 +407,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               }}>
               <Image
                 source={require('../../../images/aazz.png')}
-                style={{width: 14, height: 14}}
+                style={{ width: 14, height: 14 }}
               />
             </Marker>
             <MapViewDirections
@@ -432,15 +433,15 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
           <View
             style={[
               ViewStyles.circle2,
-              {backgroundColor: 'white', elevation: 10},
+              { backgroundColor: 'white', elevation: 10 },
             ]}>
             <TouchableOpacity
               onPress={() => this.doReturn()}
-              hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
-          </View>
+        </View>
         <View
           style={{
             flexDirection: 'row',
@@ -490,7 +491,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               })
             }
             onPress={() =>
-              this.setState({active: 0}, () => this.handleSlide(xTabOne))
+              this.setState({ active: 0 }, () => this.handleSlide(xTabOne))
             }>
             <Text
               style={{
@@ -522,7 +523,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               })
             }
             onPress={() =>
-              this.setState({active: 1}, () => this.handleSlide2(xTabTwo - 3))
+              this.setState({ active: 1 }, () => this.handleSlide2(xTabTwo - 3))
             }>
             <Text
               style={{
@@ -548,7 +549,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             backgroundColor: '#282a36',
           }}
           onPress={() => this.doCall()}>
-          {/*<Phone />*/}
+          <Phone name="phone" size={20} color="#FFFFFF" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -564,7 +565,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             backgroundColor: '#ffffff',
           }}
           onPress={() => this.zoomIn()}>
-          <Text style={{fontFamily: 'Montserrat-Medium', fontSize: 30}}>+</Text>
+          <Text style={{ fontFamily: 'Montserrat-Medium', fontSize: 30 }}>+</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -580,7 +581,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             backgroundColor: '#ffffff',
           }}
           onPress={() => this.zoomOut()}>
-          <Text style={{fontFamily: 'Montserrat-Medium', fontSize: 30}}>-</Text>
+          <Text style={{ fontFamily: 'Montserrat-Medium', fontSize: 30 }}>-</Text>
         </TouchableOpacity>
         <View
           style={{
@@ -590,6 +591,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             borderRadius: 25,
             marginRight: 'auto',
             backgroundColor: '#FFF',
+            marginBottom: 10,
           }}>
           <View
             style={{
@@ -614,7 +616,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
                   translateY: event.nativeEvent.layout.height,
                 })
               }>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Image
                   style={{
                     width: 50,
@@ -645,7 +647,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
                   name="star"
                   size={18}
                   color="#7BE495"
-                  style={{marginTop: 35, marginLeft: 25}}
+                  style={{ marginTop: 35, marginLeft: 25 }}
                 />
                 <Text
                   style={{
@@ -660,9 +662,9 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               <Text
                 style={[
                   TextStyles.middleBlueText3,
-                  {marginLeft: 0, width: '90%', marginTop: 15},
+                  { marginLeft: 0, width: '90%', marginTop: 15 },
                 ]}>
-               {street} {number}, {district}, {cityUbs}, {ufUbs}
+                {street} {number}, {district}, {cityUbs}, {ufUbs}
               </Text>
             </Animated.View>
 
@@ -680,7 +682,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
                   },
                 ],
               }}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Image
                   style={{
                     width: 50,
@@ -711,7 +713,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
                   name="star"
                   size={18}
                   color="#7BE495"
-                  style={{marginTop: 35, marginLeft: 25}}
+                  style={{ marginTop: 35, marginLeft: 25 }}
                 />
                 <Text
                   style={{
@@ -726,13 +728,13 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               <Text
                 style={[
                   TextStyles.middleBlueText3,
-                  {marginLeft: 0, width: '90%', marginTop: 15},
+                  { marginLeft: 0, width: '90%', marginTop: 15 },
                 ]}>
                 {streetUbs} {numberUbs}, {districtUbs}, {cityUbs}, {ufUbs}
               </Text>
             </Animated.View>
-              </View>
-              </View>
+          </View>
+        </View>
       </View>
     );
   }

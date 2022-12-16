@@ -7,6 +7,7 @@ import UserIcon from 'react-native-vector-icons/AntDesign'
 import AddAddresIcon from 'react-native-vector-icons/MaterialIcons'
 import AddressIcon from 'react-native-vector-icons/Entypo'
 import PlusIcon from 'react-native-vector-icons/Entypo'
+import BackIcon from 'react-native-vector-icons/AntDesign';
 /*import Development from '../../../images/webdevelopment.svg';
 import HospitalIcon from '../../../images/hhospital.svg';
 import Hospital from '../../../images/hospitalicon.svg';

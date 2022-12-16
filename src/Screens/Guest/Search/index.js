@@ -13,6 +13,7 @@ import {TextInput, Button, Snackbar} from 'react-native-paper';
 import Androw from 'react-native-androw';
 import api from '../../../services/api';
 import axios from 'axios';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 const windowWidth = Dimensions.get('window').width;
 import Arrow from '../../../images/arrow-left-curved.svg';
 //import TextInputMask from 'react-native-text-input-mask';
@@ -305,7 +306,7 @@ export default class GuestScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('InicialScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
           <Snackbar

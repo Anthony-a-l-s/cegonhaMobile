@@ -6,6 +6,7 @@ import Hospital from '../../../../images/growhospital.svg';
 import UBS from '../../../../images/growubs.svg';*/
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ContainerStyles, TextStyles, ViewStyles} from '../../styles';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 export default class AddAreaScreen extends React.Component {
@@ -59,7 +60,7 @@ export default class AddAreaScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('AdminScreen')}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
         </View>

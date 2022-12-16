@@ -9,7 +9,6 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
-  TextInput,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
@@ -18,7 +17,7 @@ import Androw from 'react-native-androw';
 //import Arrow from '../../../../../../images/arrow-left-curved.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../../services/api';
-import {Button} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 import {TextInputMask} from 'react-native-masked-text';
 import {
@@ -485,35 +484,45 @@ export default class EditiCenterMedicalScreen extends React.Component {
                 <LinearGradient
                   colors={['#FFFFFF', '#FFFFFF']}
                   style={ViewStyles.linearGradient2}>
-                  <TextInputMask
+                  <TextInput
                     mode="outlined"
                     placeholder="Telefone"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
-                      this.phone = input;
+                      this.telefone = input;
                     }}
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="#000000"
                     theme={{
+                      colors: {
+                        text: '#282a36',
+                        primary: '#7BE495',
+                        placeholder: '#D0DAD1',
+                      },
                       fonts: {regular: ''},
                       roundness: 18,
                     }}
-                    type={'cel-phone'}
-                    options={{
-                      maskType: 'BRL',
-                      withDDD: true,
-                      dddMask: '(99) '
-                    }}
-                    value={phone}
-                    onChangeText={value => (
-                      this.onChangeHandle('phone', value),
-                      this.setState({
-                        errorMessagePhone: null,
-                      })
-                    )}
                     fontFamily={'Montserrat-Medium'}
+                    render={(props) => (
+                      <TextInputMask
+                        {...props}
+                        value={phone}
+                        type={'cel-phone'}
+                        options={{
+                          maskType: 'BRL',
+                          withDDD: true,
+                          dddMask: '(99) ',
+                        }}
+                        onChangeText={value => (
+                          this.onChangeHandle('phone', value),
+                          this.setState({
+                            errorMessagePhone: null,
+                          })
+                        )}
+                      />
+                    )}
                   />
                 </LinearGradient>
               </Androw>

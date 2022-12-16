@@ -19,10 +19,11 @@ import MapViewDirections from 'react-native-maps-directions';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Frame from '../../../images/Frame.png';
 import Location from '../../../images/location.svg';
-import Phone from '../../../images/phone.svg';
 import {ContainerStyles, TextStyles, ViewStyles} from '../../../styles';
 import Arrow from '../../../images/arrow-left-curved.svg';
-import Icon from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Phone from 'react-native-vector-icons/Entypo';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import api from '../../../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -437,7 +438,7 @@ export default class UserFoundHospitalScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.doReturn()}
               hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-              {/*<Arrow />*/}
+              <BackIcon name="back" size={30} color='#7BE495' />
             </TouchableOpacity>
           </View>
           </View>
@@ -548,7 +549,7 @@ export default class UserFoundHospitalScreen extends React.Component {
             backgroundColor: '#282a36',
           }}
           onPress={() => this.doCall()}>
-          {/*<Phone />*/}
+          <Phone name="phone" size={20} color="#FFFFFF" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{

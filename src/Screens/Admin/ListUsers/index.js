@@ -165,7 +165,7 @@ export default class ListUsersScreen extends React.Component {
                   ButtonStyles.coloredbutton,
                   {backgroundColor: '#7BE495', margin: 5},
                 ]}>
-                <AddressIcon name="address" size={25} color="#FFFFFF" />
+                <AddressIcon name="location" size={25} color="#FFFFFF" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.goDelete(item.id)}>

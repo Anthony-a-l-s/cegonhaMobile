@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Androw from 'react-native-androw';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 //import Arrow from '../../../../../images/arrow-left-curved.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import TextInputMask from 'react-native-text-input-mask';
@@ -273,7 +274,7 @@ export default class EditCoveredAddressScreen extends React.Component {
                     this.props.navigation.navigate('AdminScreen')
                   }
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-                  {/*<Arrow />*/}
+                  <BackIcon name="back" size={30} color='#7BE495' />
                 </TouchableOpacity>
               </View>
             </View>
