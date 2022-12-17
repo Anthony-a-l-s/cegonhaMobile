@@ -23,6 +23,7 @@ import ChooseCenterMedicalSreen from '../../Screens/AddAreas/ChooseCenterMedical
 import ChooseCenterMedical2 from '../../Screens/AddAreas/ChooseCenterMedical2';
 import EditCoveredAddressScreen from '../../Screens/AddAreas/EditCoveredAddress';
 import ListAreasScreen from '../../Screens/AddAreas/ListAreas';
+import SignupScreen from '../../Screens/User/Signup';
 
 
 const { Navigator, Screen } = createNativeStackNavigator()
@@ -74,6 +75,8 @@ export default function () {
                 component={EditCoveredAddressScreen} />
             <Screen name='ListAreasScreen'
                 component={ListAreasScreen} />
+            <Screen name='SignupScreen'
+                component={SignupScreen} />
         </Navigator>
     )
 }

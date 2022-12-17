@@ -17,7 +17,6 @@ import api from '../../../services/api';
 import { Button, TextInput } from 'react-native-paper';
 import { TextInputMask } from 'react-native-masked-text';
 import Androw from 'react-native-androw';
-import VisibilityIcon from 'react-native-vector-icons/MaterialIcons';
 import BackIcon from 'react-native-vector-icons/AntDesign';
 import { Picker } from '@react-native-picker/picker';
 
@@ -31,7 +30,7 @@ import {
 } from '../../../styles';
 const windowHeight = Dimensions.get('window').height;
 
-export default class AddUserScreen extends React.Component {
+export default class SignupScreen extends React.Component {
   state = {
     name: '',
     username: '',
@@ -50,7 +49,7 @@ export default class AddUserScreen extends React.Component {
     city: '',
     uf: '',
     cep: '',
-    admin: '',
+    admin: 'false',
     errorMessageCpf: '',
     errorMessageEmail: '',
     errorMessageName: '',
@@ -128,7 +127,6 @@ export default class AddUserScreen extends React.Component {
   }
 
   changeiconConfirmation() {
-    console.log('teste')
     this.setState({
       securetextPasswordConfirmation: !this.state.securetextPasswordConfirmation,
     });
@@ -255,7 +253,6 @@ export default class AddUserScreen extends React.Component {
         errorMessageCpf: 'Digite um CPF valido!',
       });
     }
-
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (!re.test(String(email).toLowerCase())) {
       errors = true;
@@ -263,26 +260,22 @@ export default class AddUserScreen extends React.Component {
         errorMessageEmail: 'Digite um email valido!',
       });
     }
-
     if (
       this.checkFieldEmpty(
         this.state.name,
         this.state.username,
         this.state.password,
         this.state.passwordConfirmation,
-        this.state.admin,
       ) === true
     ) {
       errors = true;
     }
-
     if (this.validationPassword(this.state.password) === false) {
       this.setState({
         errorMessagePassword: 'Senha inválida!',
       });
       errors = true;
     }
-
     if (
       this.state.passwordConfirmation != '' &&
       this.state.passwordConfirmation != password
@@ -301,12 +294,11 @@ export default class AddUserScreen extends React.Component {
         cpf: cpf.replaceAll('.', '').replaceAll('-', ''),
         admin: this.state.admin
       };
-      console.log(req)
       api
         .post('/user2', req)
         .then(res => {
           alert('Usuário cadastrado!');
-          this.props.navigation.navigate('AdminScreen');
+          this.props.navigation.navigate('LoginScreen');
         })
         .catch(err => {
           alert('Algo deu errado!');
@@ -343,11 +335,10 @@ export default class AddUserScreen extends React.Component {
               <View style={ViewStyles.circle4}>
                 <TouchableOpacity
                   onPress={() =>
-                    this.props.navigation.navigate('AdminScreen')
+                    this.props.navigation.navigate('LoginScreen')
                   }
                   hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
                   <BackIcon name="back" size={30} color='#7BE495' />
-                  {/*<Arrow />*/}
                 </TouchableOpacity>
               </View>
             </View>
@@ -635,52 +626,6 @@ export default class AddUserScreen extends React.Component {
             </Androw>
             <Text style={TextStyles.textError}>
               {this.state.errorMessagePasswordConfirmation}
-            </Text>
-
-            <Androw style={ViewStyles.shadow}>
-              <View
-                style={[
-                  ViewStyles.linearGradient2,
-                  {
-                    height: 68,
-
-                    backgroundColor: '#FFFFFF',
-                    borderColor: '#d9e1d9',
-                    borderWidth: 1,
-                  },
-                ]}>
-                <Picker
-                  selectedValue={this.state.admin}
-                  style={{
-                    marginLeft: 5,
-                    width: 280,
-                    height: 50,
-                    color: '#000000',
-                  }}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({
-                      admin: itemValue,
-                      errorMessageAdmin: null
-                    })
-                  }>
-                  <Picker.Item
-                    label="Tipo de usuário"
-                    value=""
-                  />
-                  <Picker.Item
-                    label="Administrador"
-                    value="true"
-                  />
-                  <Picker.Item
-                    label="Usuário comum"
-                    value="false"
-                  />
-                </Picker>
-                <Text style={{ width: '100%', height: 60, position: 'absolute', bottom: 0, left: 0 }}>{' '}</Text>
-              </View>
-            </Androw>
-            <Text style={TextStyles.textError}>
-              {this.state.errorMessageAdmin}
             </Text>
 
             <Androw style={ViewStyles.shadow}>
