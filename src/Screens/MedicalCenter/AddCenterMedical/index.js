@@ -277,7 +277,7 @@ export default class AddCenterMedicalScreen extends React.Component {
         street: rua,
         number: numero,
       };
-      console.log(req);
+
       api
         .post(`medical-center`, req)
         .then(res => {
@@ -286,7 +286,7 @@ export default class AddCenterMedicalScreen extends React.Component {
         })
         .catch(err => {
           alert('Algo deu errado!');
-          console.log(err);
+          
         });
     }
   }
@@ -373,7 +373,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Nome"
+                    label="Nome"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     style={InputStyles.inputBox}
@@ -409,7 +409,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Imagem"
+                    label="Imagem"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -451,7 +451,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Telefone"
+                    label="Telefone"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -501,7 +501,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Latidude"
+                    label="Latidude"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -542,7 +542,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Longitude"
+                    label="Longitude"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -583,7 +583,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="CEP"
+                    label="CEP"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -625,7 +625,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Rua"
+                    label="Rua"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -667,7 +667,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número"
+                    label="Número"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -709,7 +709,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Bairro"
+                    label="Bairro"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {
@@ -751,7 +751,7 @@ export default class AddCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Cidade"
+                    label="Cidade"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => {

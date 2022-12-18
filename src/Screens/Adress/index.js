@@ -135,11 +135,11 @@ export default class AdressScreen extends React.Component {
             uf: uf,
             cep: cep,
         };
-        console.log(req)
+     
         if (street && number && city && uf && district && cep) {
             api.get("discovery-addressNh/" + district)
                 .then(res => {
-                    console.log(res.data)
+                  
                     const idPreNatal = res.data.id_addres_pre_natal;
                     const stringIdPreNatal = '' + idPreNatal;
                     const idParto = res.data.id_addres_parto;
@@ -149,7 +149,7 @@ export default class AdressScreen extends React.Component {
                     this.props.navigation.push('UserFoundHospitalScreen');
                 })
                 .catch((err) => {
-                    console.log(err)
+               
                     alert('Não foi possivel buscar um centro médico que atende sua localidade');
 
                 })
@@ -159,8 +159,8 @@ export default class AdressScreen extends React.Component {
         return (
             item.adresses.map((i) => {
                 return (
-                    <View>
-                        <ScrollView>
+                    <View key={i.id}>
+                        <ScrollView >
                             <View
                                 style={[
                                     ContainerStyles.infoContainer,
@@ -212,7 +212,7 @@ export default class AdressScreen extends React.Component {
                     });
                 })
                 .catch(error => {
-                    console.log(error)
+                   
                 });
         };
         fetchData();

@@ -128,7 +128,7 @@ export default class AddUserScreen extends React.Component {
   }
 
   changeiconConfirmation() {
-    console.log('teste')
+    
     this.setState({
       securetextPasswordConfirmation: !this.state.securetextPasswordConfirmation,
     });
@@ -301,7 +301,7 @@ export default class AddUserScreen extends React.Component {
         cpf: cpf.replaceAll('.', '').replaceAll('-', ''),
         admin: this.state.admin
       };
-      console.log(req)
+     
       api
         .post('/user2', req)
         .then(res => {
@@ -310,7 +310,7 @@ export default class AddUserScreen extends React.Component {
         })
         .catch(err => {
           alert('Algo deu errado!');
-          console.log(err);
+         
         });
     }
   }
@@ -377,7 +377,7 @@ export default class AddUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Nome"
+                  label="Nome"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   style={InputStyles.inputBox}
@@ -413,7 +413,7 @@ export default class AddUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Username"
+                  label="Username"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   ref={input => {
@@ -452,7 +452,7 @@ export default class AddUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Email"
+                  label="Email"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
@@ -492,7 +492,7 @@ export default class AddUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="CPF"
+                  label="CPF"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   ref={input => {
@@ -538,7 +538,7 @@ export default class AddUserScreen extends React.Component {
                 <View style={InputStyles.inputArea}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Senha"
+                    label="Senha"
                     ref={input => {
                       this.password = input;
                     }}
@@ -593,7 +593,7 @@ export default class AddUserScreen extends React.Component {
                 <View style={InputStyles.inputArea}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Confirmação de senha"
+                    label="Confirmação de senha"
                     ref={input => {
                       this.passwordConfirmation = input;
                     }}

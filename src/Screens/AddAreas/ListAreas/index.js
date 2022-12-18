@@ -147,7 +147,7 @@ export default class ListAreasScreen extends React.Component {
       Authorization: this.state.token,
     };
     this.setState({loading: true});
-    console.log(this.state.token);
+   
     api
       .get('cover-address-street/' + text, {headers: headers})
       .then(res => {

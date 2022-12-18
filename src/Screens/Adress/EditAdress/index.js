@@ -109,7 +109,7 @@ export default class EditAdressScreen extends React.Component {
   };
   doDelete = async () => {
     const valID = await AsyncStorage.getItem('idHospitalEdit');
-    console.log(valID);
+  
     api
       .delete('hospital/' + valID)
       .then(res => {
@@ -200,7 +200,7 @@ export default class EditAdressScreen extends React.Component {
         city: city,
         uf: this.state.uf,
       };
-      console.log(req)
+    
       api
         .put('adress/' + valIdAdress + '/' + valIdUser, req)
         .then(() => {
@@ -281,7 +281,7 @@ export default class EditAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Rua"
+                    label="Rua"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -320,7 +320,7 @@ export default class EditAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número"
+                    label="Número"
                     keyboardType="numeric"
                     returnKeyType="next"
                     blurOnSubmit={false}
@@ -360,7 +360,7 @@ export default class EditAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="CEP"
+                    label="CEP"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     style={InputStyles.inputBox}
@@ -396,7 +396,7 @@ export default class EditAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Bairro"
+                    label="Bairro"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -435,7 +435,7 @@ export default class EditAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Cidade"
+                    label="Cidade"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {

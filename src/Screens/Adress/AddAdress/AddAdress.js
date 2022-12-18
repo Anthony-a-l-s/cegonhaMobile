@@ -215,7 +215,7 @@ export default class AddAdressScreen extends React.Component {
         uf: this.state.uf,
         cep: cep
       };
-      console.log(req)
+     
       api.post("/adress", req)
         .then(res => {
            alert('Endereço cadastrado!');
@@ -223,7 +223,7 @@ export default class AddAdressScreen extends React.Component {
         })
         .catch((err) => {
           alert('Algo deu errado!');
-          console.log(err)
+        
         });
     } 
   }
@@ -283,7 +283,7 @@ export default class AddAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="CEP"
+                    label="CEP"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     style={InputStyles.inputBox}
@@ -319,7 +319,7 @@ export default class AddAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Rua"
+                    label="Rua"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -358,7 +358,7 @@ export default class AddAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número"
+                    label="Número"
                     keyboardType="numeric"
                     returnKeyType="next"
                     blurOnSubmit={false}
@@ -398,7 +398,7 @@ export default class AddAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Bairro"
+                    label="Bairro"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -437,7 +437,7 @@ export default class AddAdressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Cidade"
+                    label="Cidade"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {

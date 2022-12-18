@@ -486,7 +486,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Telefone"
+                    label="Telefone"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -536,7 +536,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Latitude"
+                    label="Latitude"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -575,7 +575,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Latitude"
+                    label="Latitude"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -614,7 +614,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Latitude"
+                    label="Latitude"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -654,7 +654,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Rua"
+                    label="Rua"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -693,7 +693,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número"
+                    label="Número"
                     keyboardType="numeric"
                     returnKeyType="next"
                     blurOnSubmit={false}
@@ -733,7 +733,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Bairro"
+                    label="Bairro"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {
@@ -772,7 +772,7 @@ export default class EditiCenterMedicalScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Cidade"
+                    label="Cidade"
                     returnKeyType="next"
                     blurOnSubmit={false}
                     ref={input => {

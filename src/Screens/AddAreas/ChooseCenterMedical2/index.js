@@ -87,7 +87,7 @@ export default class ChooseCenterMedical2 extends React.Component {
     await AsyncStorage.setItem('idUBSAdd', JSON.stringify(id));
     const tipo = await AsyncStorage.getItem('AddressType');
 
-    console.log(tipo);
+  
     if (tipo === '1') {
       this.props.navigation.push('AddCoveredAddressScreen');
     }

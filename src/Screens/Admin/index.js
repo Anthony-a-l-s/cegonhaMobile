@@ -99,7 +99,7 @@ export default class AdminScreen extends React.Component {
         <View style={ViewStyles.separator} />
         <TouchableOpacity
           onPress={() =>
-            this.props.navigation.navigate('AddAreaScreen')
+            this.props.navigation.navigate('ChooseCenterMedicalSreen')
           }>
           <View style={ContainerStyles.infoContainer}>
             <View style={ContainerStyles.containerIcons}>

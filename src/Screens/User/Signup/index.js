@@ -302,7 +302,7 @@ export default class SignupScreen extends React.Component {
         })
         .catch(err => {
           alert('Algo deu errado!');
-          console.log(err);
+          
         });
     }
   }

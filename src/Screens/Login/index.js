@@ -116,7 +116,7 @@ export default class LoginScreen extends React.Component {
         .then(res => {
           login(res.data.token)
           if (res.data.admin === true) {
-            console.log('admin')
+            
             AsyncStorage.removeItem('type');
             AsyncStorage.setItem('type', '1');
             this.props.navigation.push('AdminScreen');
@@ -134,7 +134,7 @@ export default class LoginScreen extends React.Component {
             this.setState({
               loading: false,
             });
-            console.log('não é admin')
+        
             AsyncStorage.setItem('token', res.data.token);
             AsyncStorage.removeItem('type');
             AsyncStorage.setItem('type', '2');
@@ -178,7 +178,7 @@ export default class LoginScreen extends React.Component {
               visible: false,
             });
           }, 1000);
-          console.log('Erro', err.response);
+        
           //alert('Senha ou email estão errados'); // eslint-disable-line no-alert
         });
     } else {
@@ -321,7 +321,7 @@ export default class LoginScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Email"
+                  label="Email"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => {
@@ -355,7 +355,7 @@ export default class LoginScreen extends React.Component {
                   <View style={InputStyles.inputArea}>
                     <TextInput
                       mode="outlined"
-                      placeholder="Senha"
+                      label="Senha"
                       ref={input => {
                         this.loginsenha = input;
                       }}

@@ -332,7 +332,7 @@ export default class GuestScreen extends React.Component {
               style={ViewStyles.linearGradientFind5}>
               <TextInput
                 mode="outlined"
-                placeholder="CEP"
+                label="CEP"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => {
@@ -364,7 +364,7 @@ export default class GuestScreen extends React.Component {
               style={ViewStyles.linearGradientFind6}>
               <TextInput
                 mode="outlined"
-                placeholder="Número"
+                label="Número"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => {
@@ -400,7 +400,7 @@ export default class GuestScreen extends React.Component {
             style={ViewStyles.linearGradientFind2}>
             <TextInput
               mode="outlined"
-              placeholder="Bairro"
+              label="Bairro"
               returnKeyType="next"
               blurOnSubmit={false}
               onSubmitEditing={() => {
@@ -433,7 +433,7 @@ export default class GuestScreen extends React.Component {
             style={ViewStyles.linearGradientFind2}>
             <TextInput
               mode="outlined"
-              placeholder="Rua"
+              label="Rua"
               returnKeyType="next"
               blurOnSubmit={false}
               onSubmitEditing={() => {
@@ -468,7 +468,7 @@ export default class GuestScreen extends React.Component {
               style={ViewStyles.linearGradientFind3}>
               <TextInput
                 mode="outlined"
-                placeholder="Cidade"
+                label="Cidade"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => {
@@ -501,7 +501,7 @@ export default class GuestScreen extends React.Component {
               style={ViewStyles.linearGradientFind4}>
               <TextInput
                 mode="outlined"
-                placeholder="Estado"
+                label="Estado"
                 ref={input => {
                   this.uf = input;
                 }}

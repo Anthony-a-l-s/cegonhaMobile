@@ -127,7 +127,7 @@ export default class ListUsersScreen extends React.Component {
   };
   renderItem = ({item}) => {
     return (
-      <View>
+      <View key={item.id}>
         <ScrollView>
           <View
             style={[
@@ -187,7 +187,7 @@ export default class ListUsersScreen extends React.Component {
     this.makeRemoteRequest(text);
   }
   makeRemoteRequest(text) {
-    console.log(text);
+    
     this.setState({loading: true});
     api
       .get('user/' + text)

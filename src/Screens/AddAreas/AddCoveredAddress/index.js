@@ -282,7 +282,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="CEP"
+                    label="CEP"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="#FFFFFF"
@@ -316,7 +316,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Rua"
+                    label="Rua"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="#FFFFFF"
@@ -350,7 +350,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Bairro"
+                    label="Bairro"
                     keyboardType="numeric"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
@@ -385,7 +385,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número Início"
+                    label="Número Início"
                     style={InputStyles.inputBox}
                     underlineColor="#FFFFFF"
                     theme={{
@@ -419,7 +419,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Número Fim"
+                    label="Número Fim"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="transparent"
@@ -453,7 +453,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Cidade"
+                    label="Cidade"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="transparent"
@@ -487,7 +487,7 @@ export default class AddCoveredAddressScreen extends React.Component {
                   style={ViewStyles.linearGradient2}>
                   <TextInput
                     mode="outlined"
-                    placeholder="Estado"
+                    label="Estado"
                     style={InputStyles.inputBox}
                     placeholderTextColor="#D0DAD1"
                     underlineColor="transparent"

@@ -35,7 +35,7 @@ export default class AddAreaScreen extends React.Component {
     this.setState({
       tipo: XD,
     });
-    console.log(XD);
+   
     this.props.navigation.navigate('ChooseCenterMedicalSreen');
   };
   doUncovered = async () => {
@@ -45,7 +45,7 @@ export default class AddAreaScreen extends React.Component {
     this.setState({
       tipo: XD,
     });
-    console.log(XD);
+   
     this.props.navigation.navigate('AdminAddHospital');
   };
   render() {

@@ -279,7 +279,7 @@ export default class EditUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Nome"
+                  label="Nome"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   style={InputStyles.inputBox}
@@ -315,7 +315,7 @@ export default class EditUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Username"
+                  label="Username"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   ref={input => {
@@ -354,7 +354,7 @@ export default class EditUserScreen extends React.Component {
                 style={ViewStyles.linearGradient2}>
                 <TextInput
                   mode="outlined"
-                  placeholder="Email"
+                  label="Email"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
@@ -394,7 +394,7 @@ export default class EditUserScreen extends React.Component {
               style={ViewStyles.linearGradient2}>
               <TextInput
                 mode="outlined"
-                placeholder="CPF"
+                label="CPF"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 ref={input => {

@@ -7,18 +7,18 @@ export const ContainerStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     height: 500
   },
   container2: {
     flex: 1,
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
   },
   containerNoAlign: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
   },
   containerNoJustify: {
     flex: 1,
@@ -63,7 +63,7 @@ export const ContainerStyles = StyleSheet.create({
   //Tela Inicial - Containers
   containerInitialScreenTop: {
     flex: 3,
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
   },
   carouselDots: {
     flex: 0.5,
@@ -73,19 +73,19 @@ export const ContainerStyles = StyleSheet.create({
 
   //Tela de Login - Containers
   containerLogin: {
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 140,
   },
   //Tela de Cadastro - Containers
   containerSignup: {
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   containerSignupBottom: {
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     marginBottom: 55,
   },
   //
@@ -94,14 +94,14 @@ export const ContainerStyles = StyleSheet.create({
   containerPassword: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
   },
   containerInformation: {
     flex: 1,
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
   },
   containerPasswordBottom: {
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     marginTop: 5,
   },
@@ -109,7 +109,7 @@ export const ContainerStyles = StyleSheet.create({
 
   //Tela de Procura - Containers
   welcomeContainer: {
-    backgroundColor: '#F0EDED',
+    backgroundColor: '#FFFFFF',
     marginTop: 20,
   },
   doubleInputContainer: {
