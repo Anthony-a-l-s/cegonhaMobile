@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import Icon from 'react-native-vector-icons/Entypo';
+import BackIcon from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 import api from '../../../services/api';
@@ -124,14 +125,13 @@ export default class AddAdressScreen extends React.Component {
     }
   }
   goBack = async () => {
-     if(await AsyncStorage.getItem('type') === '1'){
+     /*if(await AsyncStorage.getItem('type') === '1'){
       this.props.navigation.navigate('AdminEditUserScreen')
         this.props.navigation.navigate('AdressScreen')
-     }
-     else{
+     }*/
+  
         this.props.navigation.navigate('UserScreen')
-        this.props.navigation.navigate('UserListAdressScreen')
-     }
+     
   }
 
   checkFieldEmpty(cep, street,number, district, city, uf) {
@@ -251,7 +251,7 @@ export default class AddAdressScreen extends React.Component {
                 <TouchableOpacity
                   onPress={() =>this.goBack()}
                   hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
-                  {/*<Arrow />*/}
+                  <BackIcon name="back" size={30} color='#7BE495' />
                 </TouchableOpacity>
               </View>
             </View>
@@ -274,7 +274,7 @@ export default class AddAdressScreen extends React.Component {
                   backgroundColor: 'white',
                   elevation: 5,
                 }}>
-                <Icon name="user" size={65} color="#282a36" />
+                <Icon name="location" size={65} color="#282a36" />
             
               </View>
               <Androw style={ViewStyles.shadow}>

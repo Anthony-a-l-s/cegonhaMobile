@@ -104,9 +104,12 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
   }
   getDataPreNatal = async () => {
     const idPreNatal = await AsyncStorage.getItem('idPreNatalGuest');
+    console.log('pré natal')
+    console.log(idPreNatal)
     api.get('medical-center-id/' + idPreNatal)
       .then(res => {
-        const idEnderecoPreNatal = res.data.id;
+        console.log(res.data)
+        //const idEnderecoPreNatal = res.data.id;
         this.setState({
           name: res.data.name,
           number: res.data.number,
@@ -127,10 +130,11 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             longitudeDelta: this.state.region.longitudeDelta,
           },
         });
-
-        api.get('address/' + idEnderecoPreNatal)
+        /*api.get('address/' + idEnderecoPreNatal)
           // eslint-disable-next-line no-shadow
           .then(res => {
+            console.log('Endereço')
+            console.log(res.data)
             this.setState({
               number: res.data.number,
               district: res.data.district,
@@ -141,11 +145,11 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             });
           })
           .catch(() => {
-            //alert('Algo deu errado no endereço!');
-          });
+            alert('Algo deu errado no endereço!');
+          });*/
       })
       .catch(() => {
-        //alert('Algo deu errado!');
+        alert('Algo deu errado!');
       });
   };
   getDataParto = async () => {
@@ -163,7 +167,8 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
           latitudeParto: res.data.latitude,
           longitudeParto: res.data.longitude,
         });
-        api.get('address/' + idEnderecoParto)
+
+        /*api.get('address/' + idEnderecoParto)
           // eslint-disable-next-line no-shadow
           .then(res => {
             this.setState({
@@ -176,11 +181,12 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             });
           })
           .catch(() => {
-            //alert('Algo deu errado no endereço!');
-          });
+            alert('Algo deu errado no endereço!');
+          });*/
+          
       })
       .catch(() => {
-        //alert('Algo deu errado!');
+        alert('Algo deu errado!');
       });
   };
 
@@ -226,6 +232,9 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
   };
 
   handleSlide = type => {
+    console.log('centro médico')
+    console.log(this.state.latitudePreNatal)
+    console.log(this.state.longitudePreNatal)
     this.setState({
       region: {
         latitude: this.state.latitudePreNatal,
@@ -378,10 +387,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
           alignItems: 'center',
           borderRadius: 10,
         }}>
-
         <View style={{ height: windowHeight * 0.55 }} />
-        <Text>Pru</Text>
-
         <View style={styles.container}>
           <MapView
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -429,6 +435,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
               }}
               strokeColor="#68B2A0"
             />
+      
           </MapView>
           <View
             style={[
@@ -438,7 +445,7 @@ export default class GuestFoundUserHospitalScreen extends React.Component {
             <TouchableOpacity
               onPress={() => this.doReturn()}
               hitSlop={{ top: 50, bottom: 50, left: 50, right: 50 }}>
-              <BackIcon name="back" size={30} color='#7BE495' />
+              <BackIcon name="back" size={30} color='#7BE495' /> 
             </TouchableOpacity>
           </View>
         </View>

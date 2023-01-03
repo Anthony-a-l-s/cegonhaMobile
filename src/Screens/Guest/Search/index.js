@@ -116,6 +116,8 @@ export default class GuestScreen extends React.Component {
           const stringIdPreNatal = '' + idPreNatal;
           const idParto = res.data[0].id_addres_parto;
           const stringIdParto = '' + idParto;
+          AsyncStorage.removeItem('idPreNatalGuest');
+          AsyncStorage.removeItem('idPartoGuest');
           AsyncStorage.setItem('idPreNatalGuest', stringIdPreNatal);
           AsyncStorage.setItem('idPartoGuest', stringIdParto);
           this.props.navigation.push('GuestFoundHospitalScreen');
